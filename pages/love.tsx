@@ -10,6 +10,8 @@ import React, {useEffect, useState} from 'react'
 import {AiOutlineHeart} from 'react-icons/ai'
 
 import {Icon} from '../components/Icon'
+import { Navbar } from '../components/navbar'
+import { Login } from '../components/Login'
 
 
 
@@ -125,6 +127,9 @@ export default function Love( { hearts } ) {
 
   return (
     <>
+      <Navbar />
+      <Login />
+      
       <h1>Love</h1>
 
       <div className="haiku">
