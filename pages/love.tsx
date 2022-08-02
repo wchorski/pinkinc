@@ -7,11 +7,13 @@ import Heart from '../models/heartModel'
 
 
 import React, {useEffect, useState} from 'react'
+import { useSession, signIn, signOut } from "next-auth/react"
 import {AiOutlineHeart} from 'react-icons/ai'
 
 import {Icon} from '../components/Icon'
-import { Navbar } from '../components/navbar'
-import { Login } from '../components/Login'
+import { Navbar }   from '../components/Navbar'
+import { Login }    from '../components/Login'
+import { Register } from '../components/Register'
 
 
 
@@ -20,10 +22,11 @@ export const getServerSideProps = async () => {
   try{
     await connectDB()
   
-    console.log('-- fetch Heart --')
+    // console.log('-- fetch Heart --')
     const hearts = await Heart.find()
-    console.log('-- -- -- -- -- -- ')
-    console.log(hearts);
+    // console.log('-- -- -- -- -- -- ')
+    // console.log(hearts);
+
 
     return{
       props: { hearts: JSON.stringify(hearts) }
@@ -123,12 +126,12 @@ export default function Love( { hearts } ) {
     }
   }, [usersState])
   
-  
 
   return (
     <>
       <Navbar />
       <Login />
+      <Register />
       
       <h1>Love</h1>
 

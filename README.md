@@ -1,6 +1,8 @@
 # pinkinc
 a love letter / website built on Next.js &amp; Typescript
 
+*change repo name to 'Next Love 💘'*
+
 
 Feature List
 - let user pick color of heart
