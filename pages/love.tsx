@@ -3,7 +3,7 @@
  * @param {import('next').NextApiResponse} res
 */
 import connectDB from '../db/connection'
-import Heart from '../models/heartModel'
+import User from '../models/User'
 
 
 import React, {useEffect, useState} from 'react'
@@ -14,6 +14,7 @@ import {Icon} from '../components/Icon'
 import { Navbar }   from '../components/Navbar'
 import { Login }    from '../components/Login'
 import { Register } from '../components/Register'
+import { HeartChart } from '../components/HeartChart.js'
 
 
 
@@ -23,7 +24,7 @@ export const getServerSideProps = async () => {
     await connectDB()
   
     // console.log('-- fetch Heart --')
-    const hearts = await Heart.find()
+    const hearts = await User.find()
     // console.log('-- -- -- -- -- -- ')
     // console.log(hearts);
 
@@ -45,7 +46,7 @@ export const getServerSideProps = async () => {
 
 export default function Love( { hearts } ) {
 
-  const [heartsState, setheartsState] = useState([<AiOutlineHeart/>])
+  const [heartsState, setheartsState] = useState([])
   const [usersState, setusersState] = useState([])
   const [heartsCount, setheartsCount] = useState(0)
 
@@ -68,13 +69,15 @@ export default function Love( { hearts } ) {
   const addHeartUser = async () => {
 
     const newUser = {
-      name: `Will`,
-      color: `#30a977`,
-      count: `46`
+      email: `nico@example.com`,
+      password: `passmeoutside`,
+      name: `Nico`,
+      color: `#a93083`,
+      heartCount: `4`
     }
 
     try{
-      const res = await fetch('/api/heart/add', {
+      const res = await fetch('/api/users/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -84,22 +87,16 @@ export default function Love( { hearts } ) {
       })
 
       const data = await res.json()
-      console.log(data)
+      // console.log(data)
       
     } catch (err){
       console.error(err)
     }
   }
 
-  // const totalHeartsCount = () => {
-  //   usersState.map(usr => {
-  //     setheartsCount(prev => prev + usr.count)
-  //   })
-  // }
-
   const getHearts = () => {
     usersState.map(usr => {
-      for(let i = 0; i <= usr.count; i++){
+      for(let i = 0; i <= usr.heartCount; i++){
         addHeart(usr.color)
       }
     })
@@ -127,6 +124,10 @@ export default function Love( { hearts } ) {
   }, [usersState])
   
 
+  const { data: session, status } = useSession()
+  // console.log(session, status);
+  
+
   return (
     <>
       <Navbar />
@@ -148,27 +149,43 @@ export default function Love( { hearts } ) {
         <a href="https://www.familyfriendpoems.com/collection/love-haiku-poems/">- Sandy Maloof </a>
       </div>
 
-      <button onClick={addHeartUser}>new User</button>
+      <HeartChart />
 
-      <div className="users">
-        {usersState.map((user: object) => (
-          <div className="user" style={{backgroundColor: `${user.color}`}} key={user._id}>
-            <h5>{user.name}</h5>
-            <p>{user.count}</p>
+      {session && (
+        <>
+          <button onClick={addHeartUser}>new User</button>
+
+          <div className="users">
+            {usersState.map((user: object) => (
+              <div className="user" style={{backgroundColor: `${user.color}`}} key={user._id}>
+                <h5>{user.name}</h5>
+                <p>{user.heartCount}</p>
+              </div>
+              
+            ))}
           </div>
-          
-        ))}
-      </div>
 
 
 
-      <h2>{heartsCount}</h2>
-      <button onClick={e => addHeart('#ff00a5')}>+ Add</button>
+          <h2>{heartsCount}</h2>
+          <button onClick={e => addHeart('#ff00a5')}>+ Add</button>
 
 
-      <div className="hearts-cont">
-        <p>{heartsState}</p>
-      </div>
+          <div className="hearts-cont">
+            <p>{heartsState}</p>
+          </div>
+        </>
+      )}
+
+      {status === "loading" && (
+        <h3>Loading...</h3>
+      )}
+
+      {!session && status === "unauthenticated" &&(
+        <>
+          <h2> *Must be logged in to add Love* </h2>
+        </>
+      )}
 
     </>
   )

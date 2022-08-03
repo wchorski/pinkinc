@@ -1,4 +1,7 @@
+@use './variables.scss';
 @use './login.scss';
+
+
 
 html,
 body {
@@ -24,6 +27,18 @@ a:hover {
 
 button {
   cursor: pointer;
+}
+// TODO make btn--inline btn--big btn--mid
+.btn{
+  background-color: transparent;
+  border: solid 1px var(--color-highlight);
+  border-radius: 3px;
+  padding: 0 .5rem;
+
+  &:hover{
+    background-color: var(--color-highlight);
+    color: black;
+  }
 }
 
 @media (prefers-color-scheme: dark) {

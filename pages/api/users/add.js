@@ -4,7 +4,7 @@
 */
 
 import connectDB from '../../../db/connection'
-import Model from '../../../models/user'
+import Model from '../../../models/User'
 
 
 export default async function addUser(req, res) {

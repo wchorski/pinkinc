@@ -1,6 +1,8 @@
-import { Schema, model, models } from 'mongoose'
+// import { Schema, model, models } from 'mongoose'
+import mongoose from 'mongoose'
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
+
   email: {
     type: String,
     trim: true,
@@ -9,10 +11,27 @@ const userSchema = new Schema({
     required: 'Email address is required',
     match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'Please fill a valid email address']
   },
-  username: {
+  password: {
     type: String,
     required: true
   },
+  name: {
+    type: String,
+    required: true,
+    unique: true // `email` must be unique
+  },
+  image: {
+    type: String
+  },
+  color: {
+    type: String,
+    default: "#ff00a5"
+  },
+  heartCount:{
+    type: Number,
+    default: 1
+  },
+
   roles: {
     User: {
         type: Number,
@@ -21,12 +40,10 @@ const userSchema = new Schema({
     Editor: Number,
     Admin: Number
   },
-  password: {
-    type: String,
-    required: true
-  },
-  refreshToken: String
+  refreshToken: String,
+  expires: Date
 });
 
-const User = models.User || model('User', userSchema)
-export default User
+// const User = models.User || model('User', userSchema)
+// export default User
+export default mongoose.models.User || mongoose.model('User', userSchema)

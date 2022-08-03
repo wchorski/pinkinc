@@ -1,9 +1,61 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useEffect } from 'react'
+import connectDB from '../db/connection'
+import User from '../models/user'
+import defaultUsersJSON from '../config/defaultUsers.json'
 import styles from '../styles/Home.module.css'
 
+export const getServerSideProps = async () => {
+  try{
+    await connectDB()
+    const users = await User.find()
+
+    if(users.length === 0){
+      console.log('no users found. Initializing default users');
+
+      defaultUsersJSON.forEach(async (usr) => {
+  
+        const response = await fetch('/api/users/add', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+    
+          body: JSON.stringify(usr)
+        })
+  
+        const data = await response.json()
+        console.log(data)
+  
+      })
+    }
+
+    // const res = await fetch('/api/initialize/createusers', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    // })
+
+    return{
+      props: { users: JSON.stringify(users) }
+      // props: { hearts }
+    }
+    
+  } catch (err){
+    console.error(err)
+    return {
+      notFound: true
+    }
+  }
+}
+
+
 const Home: NextPage = () => {
+
+
   return (
     <div className={styles.container}>
       <Head>

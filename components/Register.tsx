@@ -55,7 +55,7 @@ export const Register = () => {
                 ) : null}
             </div>
 
-            <button className='submitPost' type='submit'> Login </button>
+            <button className='submitPost' type='submit'> Sign Up </button>
           </Form>
         )}
       </Formik>
