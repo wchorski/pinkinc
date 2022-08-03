@@ -2,6 +2,7 @@
 a love letter / website built on Next.js &amp; Typescript
 
 *change repo name to 'Next Love 💘'*
+with next-auth
 
 
 Feature List
