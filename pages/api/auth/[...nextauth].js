@@ -60,7 +60,9 @@ export default NextAuth({
           return{
             id: foundUser._id,
             name: foundUser.name,
-            email: foundUser.email
+            email: foundUser.email,
+            color: foundUser.color
+
           }
         }
         // login failed catch all
@@ -76,13 +78,17 @@ export default NextAuth({
   callbacks: {
     jwt:  async ({ token, user }) => {
       if(user){
-        token.id = user.id
+        token.id          = user.id,
+        token.color       = user.color
+
       }
       return token
     },
     session:    ({ session, token }) => {
       if(token){
-        session.id = token.id
+        session.user.id          = token.id,
+        session.user.color       = token.color
+
       }
       return session
     }

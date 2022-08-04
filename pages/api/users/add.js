@@ -25,6 +25,7 @@ export default async function addUser(req, res) {
     res.status(200).json({ newModel })
 
   } catch (err) {
-    console.error(err);
+    console.error(err)
+    res.status(400).json({status: 'failed to create user', message: err.toString()})
   }
 }

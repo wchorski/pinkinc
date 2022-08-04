@@ -2,6 +2,37 @@ import React from 'react'
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup';
 
+
+const addHeartUser = async () => {
+
+  const newUser = {
+    email: `nico@example.com`,
+    password: `passmeoutside`,
+    name: `Nico`,
+    color: `#a93083`,
+    heartCount: `4`
+  }
+
+  try{
+    const res = await fetch('/api/users/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+
+      body: JSON.stringify(newUser)
+    })
+
+    const data = await res.json()
+    // console.log(data)
+    
+  } catch (err){
+    console.error(err)
+  }
+}
+
+
+
 export const Register = () => {
 
   const loginUser = (values: object) => {

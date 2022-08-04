@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt');
 const defaultUsers = require('../../../config/defaultUsers.json')
 
 export default function createusers(req, res) { 
-  console.log('createusers');
+  // console.log('createusers');
   res.json(defaultUsers)
 }
 

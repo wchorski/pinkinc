@@ -14,10 +14,6 @@ const mongoURL = (USER === 'localhost' || USER === 'undefined' )
 const connectDB = async () => {
   try {
     await mongoose.connect(mongoURL, {
-      useUnifiedTopology: true,
-      useFindAndModify: false,
-      useCreateIndex: true,
-      useNewUrlParser: true,
       family: 4 // Use IPv4, skip trying IPv6
     });
 

@@ -9,11 +9,12 @@ import User from '../models/User'
 import React, {useEffect, useState} from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
 import {AiOutlineHeart} from 'react-icons/ai'
+import {RiHeartAddLine} from 'react-icons/ri'
 
-import {Icon} from '../components/Icon'
-import { Navbar }   from '../components/Navbar'
-import { Login }    from '../components/Login'
-import { Register } from '../components/Register'
+import { Icon }       from '../components/Icon'
+import { Navbar }     from '../components/Navbar'
+import { Login }      from '../components/Login'
+import { Register }   from '../components/Register'
 import { HeartChart } from '../components/HeartChart.js'
 
 
@@ -46,59 +47,67 @@ export const getServerSideProps = async () => {
 
 export default function Love( { hearts } ) {
 
+  const { data: session, status } = useSession()
+  // console.log(session, status);
+
   const [heartsState, setheartsState] = useState([])
   const [usersState, setusersState] = useState([])
   const [heartsCount, setheartsCount] = useState(0)
+  const [playerHeartCount, setplayerHeartCount] = useState(0)
 
-  const addHeart = async (color: string) => {
-    setheartsCount(prev => ++prev)
-    // setheartsState(prev => [<AiOutlineHeart />, ...prev])
-    setheartsState(prev => [<Icon color={color}/>, ...prev])
+  const filterPlayerOne = (users: object[], id: string) => {
+    const filteredArray = users.filter(user => user._id === id)
+
+    const playerOne = filteredArray[0]
+
+    console.log(playerOne);
+    
+    setplayerHeartCount(playerOne.heartCount)
+    
+    return playerOne
   }
 
-  const updateHeart = async () => {
-    const res = await fetch('/api/heart/add', {
+  const addHeartIcon = async (color: string) => {
+    // setheartsCount(prev => ++prev)
+    // setheartsState(prev => [<AiOutlineHeart />, ...prev])
+    setheartsState((prev) => [<Icon color={color} />, ...prev])
+  }
+
+  const updateUsersHearts = async (heartsCount: number) => {
+
+    setplayerHeartCount(prev => ++prev)
+    // console.log(playerHeartCount);
+  
+
+    const res = await fetch(`/api/users/${session.user.id}`, {
+      method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
 
-      body: JSON.stringify({name: 'newname'})
+      body: JSON.stringify({
+        heartCount: playerHeartCount,
+        _id: session.user.id
+      })
+    })
+
+    const data = await res.json()
+    // console.log(data)
+  }
+
+
+
+  const getHeartIcons = () => {
+    usersState.map(usr => {
+      for(let i = 0; i <= usr.heartCount; i++){
+        addHeartIcon(usr.color)
+      }
     })
   }
 
-  const addHeartUser = async () => {
-
-    const newUser = {
-      email: `nico@example.com`,
-      password: `passmeoutside`,
-      name: `Nico`,
-      color: `#a93083`,
-      heartCount: `4`
-    }
-
-    try{
-      const res = await fetch('/api/users/add', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-  
-        body: JSON.stringify(newUser)
-      })
-
-      const data = await res.json()
-      // console.log(data)
-      
-    } catch (err){
-      console.error(err)
-    }
-  }
-
-  const getHearts = () => {
+  const getTotalHearts = () => {
     usersState.map(usr => {
-      for(let i = 0; i <= usr.heartCount; i++){
-        addHeart(usr.color)
-      }
+      setheartsCount(prev => prev + usr.heartCount)
     })
   }
 
@@ -106,7 +115,7 @@ export default function Love( { hearts } ) {
   useEffect(() => {
     const array = JSON.parse(hearts);
     setusersState(array)
-    // totalHeartsCount()
+
   
     return () => {
       console.log('return');
@@ -115,26 +124,36 @@ export default function Love( { hearts } ) {
   }, [])
 
   useEffect(() => {
-    // totalHeartsCount()
-    getHearts()
+    // getHeartIcons()
+    getTotalHearts()
   
     return () => {
       console.log('return');
     }
   }, [usersState])
-  
 
-  const { data: session, status } = useSession()
-  // console.log(session, status);
+  useEffect(() => {
+    if(session){
+      setplayerHeartCount(session.user.heartCount)
+      // console.log(session.user);
+      
+      filterPlayerOne(usersState, session.user.id)
+      
+    }
+  
+    return () => {
+      console.log('return');
+    }
+  }, [session])
   
 
   return (
     <>
       <Navbar />
-      <Login />
-      <Register />
+      {/* <Login /> */}
+      {/* <Register /> */}
       
-      <h1>Love</h1>
+      {/* <h1>Love</h1>
 
       <div className="haiku">
         <p>
@@ -147,33 +166,42 @@ export default function Love( { hearts } ) {
           Love forever lasting!
         </p>
         <a href="https://www.familyfriendpoems.com/collection/love-haiku-poems/">- Sandy Maloof </a>
-      </div>
+      </div> */}
 
-      <HeartChart />
 
       {session && (
         <>
-          <button onClick={addHeartUser}>new User</button>
+          {/* <button onClick={addHeartUser}>new User</button> */}
+          <h2><Icon color={session.user.color}/> {playerHeartCount}</h2>
 
-          <div className="users">
-            {usersState.map((user: object) => (
-              <div className="user" style={{backgroundColor: `${user.color}`}} key={user._id}>
-                <h5>{user.name}</h5>
-                <p>{user.heartCount}</p>
+
+          <div className="scoreboard">
+            {usersState.map(usr => (
+              <div className='user' key={usr._id}>
+                <h3 style={{marginRight: "1em"}}>{usr.name}</h3> <span>{usr.heartCount}</span>
               </div>
-              
             ))}
           </div>
 
+          <div className="heart-cont">
+            <HeartChart importData={usersState}/>
 
+            <button 
+              onClick={e => updateUsersHearts(session.user.color)} 
+              className="btn-heart"
+              aria-label="Add 1 Heart"
+            > 
+              <RiHeartAddLine />
+            </button>
 
-          <h2>{heartsCount}</h2>
-          <button onClick={e => addHeart('#ff00a5')}>+ Add</button>
-
-
-          <div className="hearts-cont">
-            <p>{heartsState}</p>
           </div>
+
+          <h2>{heartsCount} total hearts </h2>
+
+
+          {/* <div className="hearts-cont">
+            {heartsState}
+          </div> */}
         </>
       )}
 

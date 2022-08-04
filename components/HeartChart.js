@@ -1,26 +1,31 @@
-import React from 'react'
-import { Bar } from 'react-chartjs-2'
+import React, { useEffect, useState } from 'react'
 
-export const HeartChart = () => {
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Pie } from 'react-chartjs-2';
+ChartJS.register(ArcElement, Tooltip, Legend);
+
+
+export const HeartChart = ({ importData }) => {
+
+  const [dataState, setdataState] = useState({
+    labels: importData.map(data => data.name),
+    datasets: [
+      {
+        label: "Heart count",
+        data: importData.map(data => data.heartCount),
+        backgroundColor: importData.map(data => data.color),
+        borderColor: "black",
+        borderWidth: 1,
+      },
+    ],
+  })
+
+
   return (
     <div>
-      <Bar 
-        data={{
-          labels: ['red', 'blue', 'green'],
-          datasets: [
-            {
-              label: "# of votes",
-              data: [12, 19, 5]
-            }
-          ]
-        }}
-        height={400}
-        width={600}
-        options={{
-          maintainAspectRatio: false,
-        }}
-      />
-      <h1>O - HeartChart - O</h1>
+      <div className="chart-cont" style={{maxWidth: "40em"}}>
+        <Pie data={dataState} options={{cutout: "10%"}}/>
+      </div>
     </div>
   )
 }
