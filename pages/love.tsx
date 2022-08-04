@@ -14,7 +14,7 @@ import {RiHeartAddLine} from 'react-icons/ri'
 import { Icon }       from '../components/Icon'
 import { Navbar }     from '../components/Navbar'
 import { Login }      from '../components/Login'
-import { Register }   from '../components/Register'
+import { Register }   from '../components/RegisterForm'
 import { HeartChart } from '../components/HeartChart.js'
 
 
@@ -152,8 +152,7 @@ export default function Love( { hearts } ) {
       <Navbar />
       {/* <Login /> */}
       {/* <Register /> */}
-      
-      {/* <h1>Love</h1>
+    
 
       <div className="haiku">
         <p>
@@ -166,7 +165,7 @@ export default function Love( { hearts } ) {
           Love forever lasting!
         </p>
         <a href="https://www.familyfriendpoems.com/collection/love-haiku-poems/">- Sandy Maloof </a>
-      </div> */}
+      </div>
 
 
       {session && (
@@ -177,8 +176,8 @@ export default function Love( { hearts } ) {
 
           <div className="scoreboard">
             {usersState.map(usr => (
-              <div className='user' key={usr._id}>
-                <h3 style={{marginRight: "1em"}}>{usr.name}</h3> <span>{usr.heartCount}</span>
+              <div className='user' key={usr._id} style={{borderBottom: `solid 5px ${usr.color}`}}>
+                <h3 style={{color: usr.color}}>{usr.name}</h3> <span>{usr.heartCount}</span>
               </div>
             ))}
           </div>
@@ -190,6 +189,7 @@ export default function Love( { hearts } ) {
               onClick={e => updateUsersHearts(session.user.color)} 
               className="btn-heart"
               aria-label="Add 1 Heart"
+              style={{backgroundColor: session.user.color}}
             > 
               <RiHeartAddLine />
             </button>

@@ -17,9 +17,9 @@ export const Navbar = () => {
       <div className="nav-bg-main">
         <nav className="main">
           <ul>
-            <li key={1}> <Link href={`/`}       > Home </Link> </li>
-            <li key={2}> <Link href={`/love`}   > Love </Link> </li>
-            <li key={3}> <Link href={`/login`}  > Login </Link> </li>
+            <li key={1}> <Link href={`/`}           > Home </Link> </li>
+            <li key={2}> <Link href={`/love`}       > Love </Link> </li>
+            <li key={3}> <Link href={`/register`}   > register </Link> </li>
           </ul>
         </nav>
 
