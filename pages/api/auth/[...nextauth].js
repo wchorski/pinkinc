@@ -69,18 +69,6 @@ export default NextAuth({
           }
         }
         
-
-
-        // if(credentials.email === foundUser.email && credentials.password === foundUser.password){
-        //   return{
-        //     id: foundUser._id,
-        //     name: foundUser.name,
-        //     email: foundUser.email,
-        //     color: foundUser.color
-
-        //   }
-        // }
-
         // login failed catch all
         return null;
       },
