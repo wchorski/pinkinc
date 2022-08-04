@@ -5,24 +5,33 @@
 
 import connectDB from '../../../db/connection'
 import Model from '../../../models/User'
-
+const bcrypt = require('bcrypt');
 
 export default async function addUser(req, res) {
 
   try{
-    const {email, password } = req.body
+    const {email, name, password } = req.body
   
     // console.log('-- connecting to mongo --');
     await connectDB()
     // console.log('-- CONNECTED to mongo --');
+
+    const hashedPwd = await bcrypt.hash(password, 10);
+
+    //create and store the new user
+    const newUser = await Model.create({
+      "email": email,
+      "name": name,
+      "password": hashedPwd
+    });
+    console.log(newUser);
   
+    // console.log('-- users/add.js --')
+    // const newModel = await Model.create(newUser) 
+    // console.log(req.body)
+    // console.log('-- -- -- -- -- -- ')
   
-    console.log('-- users/add.js --')
-    const newModel = await Model.create(req.body) 
-    console.log(req.body)
-    console.log('-- -- -- -- -- -- ')
-  
-    res.status(200).json({ newModel })
+    res.status(201).json({ success: true, message: `new user create: ${newUser}` })
 
   } catch (err) {
     console.error(err)

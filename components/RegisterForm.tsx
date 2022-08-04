@@ -80,6 +80,12 @@ export const RegisterForm = () => {
       >
         {({ errors, touched }) => (
           <Form>
+            <div className='form-item'>
+              <Field name="email" type="text" placeholder="email..." className='email'/>
+              {errors.email && touched.email ? (
+                <span className='formErr'>{errors.email}</span>
+                ) : null}
+            </div>
 
             <div className='form-item'>
               <Field name="name" type="text" placeholder="username..." className='email'/>
@@ -88,12 +94,6 @@ export const RegisterForm = () => {
                 ) : null}
             </div>
 
-            <div className='form-item'>
-              <Field name="email" type="text" placeholder="email..." className='email'/>
-              {errors.email && touched.email ? (
-                <span className='formErr'>{errors.email}</span>
-                ) : null}
-            </div>
 
             <div className='form-item'>
               <Field name="password" type="password" placeholder="password..." className='password'/>

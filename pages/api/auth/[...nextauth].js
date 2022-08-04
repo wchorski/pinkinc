@@ -5,6 +5,7 @@
 
 import connectDB from '../../../db/connection'
 import Model from '../../../models/User'
+const bcrypt = require('bcrypt');
 
 import NextAuth from 'next-auth'
 // import AppleProvider from 'next-auth/providers/apple'
@@ -51,20 +52,35 @@ export default NextAuth({
         console.log("found user: " + foundUser);
         
         if(foundUser === null){
-          console.log('i was null');
+          console.log('i dont exist');
           return null;
         } // unauthorized
 
+        const match = await bcrypt.compare(credentials.password, foundUser.password)
 
-        if(credentials.email === foundUser.email && credentials.password === foundUser.password){
+        console.log();
+
+        if(credentials.email === foundUser.email && match){
           return{
             id: foundUser._id,
             name: foundUser.name,
             email: foundUser.email,
             color: foundUser.color
-
           }
         }
+        
+
+
+        // if(credentials.email === foundUser.email && credentials.password === foundUser.password){
+        //   return{
+        //     id: foundUser._id,
+        //     name: foundUser.name,
+        //     email: foundUser.email,
+        //     color: foundUser.color
+
+        //   }
+        // }
+
         // login failed catch all
         return null;
       },

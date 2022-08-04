@@ -55,14 +55,18 @@ export default function Love( { hearts } ) {
   const [heartsCount, setheartsCount] = useState(0)
   const [playerHeartCount, setplayerHeartCount] = useState(0)
 
+
   const filterPlayerOne = (users: object[], id: string) => {
     const filteredArray = users.filter(user => user._id === id)
 
+    //TODO why is this showing as undefined?
     const playerOne = filteredArray[0]
 
-    console.log(playerOne);
     
-    setplayerHeartCount(playerOne.heartCount)
+    if(playerOne){
+      setplayerHeartCount(playerOne.heartCount)
+    }
+    
     
     return playerOne
   }
@@ -137,6 +141,7 @@ export default function Love( { hearts } ) {
       setplayerHeartCount(session.user.heartCount)
       // console.log(session.user);
       
+      //TODO fix having to reload twice on seeing /love page
       filterPlayerOne(usersState, session.user.id)
       
     }
@@ -144,7 +149,7 @@ export default function Love( { hearts } ) {
     return () => {
       console.log('return');
     }
-  }, [session])
+  }, [session, usersState])
   
 
   return (
