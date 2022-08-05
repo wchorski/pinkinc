@@ -4,7 +4,7 @@
 */
 
 import connectDB from '../../../db/connection'
-import Model from '../../../models/User'
+import Model from '../../../models/user'
 const bcrypt = require('bcrypt');
 
 import NextAuth from 'next-auth'
@@ -40,8 +40,8 @@ export default NextAuth({
     CredentialProvider({
       name: "credentials",
       credentials: {
-        email:    { label: "Email",     type: "email",    placeholder: "love@mail.com"},
-        password: { label: "Password",  type: "password", placeholder: "..."},
+        email: { label: "Email", type: "email", placeholder: "love@mail.com" },
+        password: { label: "Password", type: "password", placeholder: "..." },
       },
       authorize: async (credentials) => {
 
@@ -50,8 +50,8 @@ export default NextAuth({
         const foundUser = await Model.findOne({ email: credentials.email }).exec();
 
         console.log("found user: " + foundUser);
-        
-        if(foundUser === null){
+
+        if (foundUser === null) {
           console.log('i dont exist');
           return null;
         } // unauthorized
@@ -60,15 +60,15 @@ export default NextAuth({
 
         console.log();
 
-        if(credentials.email === foundUser.email && match){
-          return{
+        if (credentials.email === foundUser.email && match) {
+          return {
             id: foundUser._id,
             name: foundUser.name,
             email: foundUser.email,
             color: foundUser.color
           }
         }
-        
+
         // login failed catch all
         return null;
       },
@@ -80,18 +80,18 @@ export default NextAuth({
     // }),
   ],
   callbacks: {
-    jwt:  async ({ token, user }) => {
-      if(user){
-        token.id          = user.id,
-        token.color       = user.color
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.id = user.id,
+          token.color = user.color
 
       }
       return token
     },
-    session:    ({ session, token }) => {
-      if(token){
-        session.user.id          = token.id,
-        session.user.color       = token.color
+    session: ({ session, token }) => {
+      if (token) {
+        session.user.id = token.id,
+          session.user.color = token.color
 
       }
       return session

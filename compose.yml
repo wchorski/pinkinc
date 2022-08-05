@@ -36,7 +36,7 @@ services:
       - FACEBOOK_ID=
       - FACEBOOK_SECRET=
     depends_on:
-      - server
+      - mongo
     networks:
       - nextlove-network
       # add to ngnix-prox-mgmt network

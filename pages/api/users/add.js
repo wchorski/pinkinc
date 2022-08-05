@@ -4,7 +4,7 @@
 */
 
 import connectDB from '../../../db/connection'
-import Model from '../../../models/User'
+import Model from '../../../models/user'
 const bcrypt = require('bcrypt');
 
 export default async function addUser(req, res) {

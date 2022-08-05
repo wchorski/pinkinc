@@ -5,7 +5,7 @@
 
 import { stringify } from 'querystring';
 import connectDB from '../../../db/connection'
-import Model from '../../../models/User'
+import Model from '../../../models/user'
 
 // export default async function getServerSideProps (context) {
 //   if (req.method === 'PATCH') {

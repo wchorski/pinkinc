@@ -25,7 +25,9 @@
     "**/*.tsx",
     "pages/api/heart/add.js",
     "components/HeartChart.js",
-    "pages/_app.tsx"
+    "pages/_app.tsx",
+    "pages/love.jsx",
+    "components/Navbar.jsx"
   ],
   "exclude": [
     "node_modules"
