@@ -124,7 +124,7 @@ export default function Love({ hearts }) {
       console.log('return');
 
     }
-  }, [])
+  }, [hearts, session])
 
   useEffect(() => {
     // getHeartIcons()
@@ -171,11 +171,10 @@ export default function Love({ hearts }) {
         <a href="https://www.familyfriendpoems.com/collection/love-haiku-poems/">- Sandy Maloof </a>
       </div>
 
-
-      {session && (
+      {status === "authenticated" && usersState && (
         <>
           {/* <button onClick={addHeartUser}>new User</button> */}
-          <h2><Icon color={session.user.color} /> {playerHeartCount}</h2>
+          <h2><Icon color={session.user?.color} /> {playerHeartCount}</h2>
 
 
           <div className="scoreboard">
@@ -190,10 +189,10 @@ export default function Love({ hearts }) {
             <HeartChart importData={usersState} />
 
             <button
-              onClick={e => updateUsersHearts(session.user.color)}
+              onClick={e => updateUsersHearts(session.user?.color)}
               className="btn-heart"
               aria-label="Add 1 Heart"
-              style={{ backgroundColor: session.user.color }}
+              style={{ backgroundColor: session.user?.color }}
             >
               <RiHeartAddLine />
             </button>
@@ -213,7 +212,7 @@ export default function Love({ hearts }) {
         <h3>Loading...</h3>
       )}
 
-      {!session && status === "unauthenticated" && (
+      {status === "unauthenticated" && (
         <>
           <h2> *Must be logged in to add Love* </h2>
         </>

@@ -6,7 +6,7 @@ const URI = process.env.MONGO_URI
 const PORT = process.env.MONGO_PORT
 const COLLECTION = process.env.MONGO_COLLECTION
 
-const mongoURL = (USER === 'localhost' || USER === 'undefined' ) 
+const mongoURL = (USER === 'localhost' || USER === 'undefined')
   ? `mongodb://${URI}:${PORT}/${COLLECTION}`
   : `mongodb://${USER}:${PWD}@${URI}:${PORT}/${COLLECTION}?authSource=admin`
 
