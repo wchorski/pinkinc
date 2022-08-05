@@ -13,8 +13,8 @@ import { RiHeartAddLine } from 'react-icons/ri'
 
 import { Icon } from '../components/Icon'
 import { Navbar } from '../components/Navbar'
-import { Login } from '../components/Login'
-import { Register } from '../components/RegisterForm'
+// import { Login } from '../components/Login'
+// import { Register } from '../components/RegisterForm'
 import { HeartChart } from '../components/HeartChart.js'
 
 

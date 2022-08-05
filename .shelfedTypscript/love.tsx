@@ -7,19 +7,20 @@ import User from '../models/user'
 
 
 import React, { useEffect, useState } from 'react'
+import { GetServerSideProps } from 'next'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { AiOutlineHeart } from 'react-icons/ai'
 import { RiHeartAddLine } from 'react-icons/ri'
 
 import { Icon } from '../components/Icon'
 import { Navbar } from '../components/Navbar'
-import { Login } from '../components/Login'
-import { Register } from '../components/RegisterForm'
+// import { Login } from '../components/Login'
+// import { RegisterForm } from '../components/RegisterForm'
 import { HeartChart } from '../components/HeartChart.js'
 
 
 
-export const getServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async () => {
 
   try {
     await connectDB()
@@ -47,7 +48,7 @@ export const getServerSideProps = async () => {
 
 export default function Love({ hearts }) {
 
-  const { data: session, status } = useSession()
+  const { data: session, status }: any = useSession()
   // console.log(session, status);
 
   const [heartsState, setheartsState] = useState([])
@@ -56,8 +57,8 @@ export default function Love({ hearts }) {
   const [playerHeartCount, setplayerHeartCount] = useState(0)
 
 
-  const filterPlayerOne = (users: object[], id: string) => {
-    const filteredArray = users.filter(user => user._id === id)
+  const filterPlayerOne = (users: any, id: any) => {
+    const filteredArray = users.filter(user => user.id === id)
 
     //TODO why is this showing as undefined?
     const playerOne = filteredArray[0]
@@ -101,7 +102,7 @@ export default function Love({ hearts }) {
 
 
   const getHeartIcons = () => {
-    usersState.map(usr => {
+    usersState.map((usr: any) => {
       for (let i = 0; i <= usr.heartCount; i++) {
         addHeartIcon(usr.color)
       }
@@ -109,7 +110,7 @@ export default function Love({ hearts }) {
   }
 
   const getTotalHearts = () => {
-    usersState.map(usr => {
+    usersState.map((usr: any) => {
       setheartsCount(prev => prev + usr.heartCount)
     })
   }
