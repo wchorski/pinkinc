@@ -23,34 +23,34 @@ import Model from '../../../models/User'
 //   console.log(context);
 // }
 
-export default async  (req, res) => {
+export default async function usersByID(req, res) {
 
   if (req.method === 'PATCH') {
 
     // console.log("* method PATCH === " + req.method)
     // console.log(req.body.heartCount);
 
-    try{
+    try {
       const user = await Model.findById(req.body._id)
       Object.assign(user, req.body)
       res.status(200).json(user)
       user.save()
-  
-    } catch (err){
+
+    } catch (err) {
       console.error(err);
-      res.status(400).json({status: 'failed to update post', message: err.toString()})
+      res.status(400).json({ status: 'failed to update post', message: err.toString() })
     }
   }
 
 
   if (req.method === 'GET') {
     console.log("* method GET === " + req.method)
-    try{
+    try {
       console.log("get one User: " + req.query.id);
 
     } catch (error) {
       return res.status(404).json({ success: false, message: error.toString() })
     }
   }
-    
+
 }

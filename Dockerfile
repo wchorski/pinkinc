@@ -18,6 +18,8 @@ RUN \
 FROM node:16-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
+
+# TODO select specific folder if .dockerignore doesn't work
 COPY . .
 
 # Next.js collects completely anonymous telemetry data about general usage.
@@ -53,8 +55,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-EXPOSE 5001
+EXPOSE 4040
 
-ENV PORT 5001
+ENV PORT 4040
 
 CMD ["node", "server.js"]

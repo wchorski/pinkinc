@@ -6,38 +6,38 @@ import connectDB from '../db/connection'
 import User from '../models/User'
 
 
-import React, {useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
-import {AiOutlineHeart} from 'react-icons/ai'
-import {RiHeartAddLine} from 'react-icons/ri'
+import { AiOutlineHeart } from 'react-icons/ai'
+import { RiHeartAddLine } from 'react-icons/ri'
 
-import { Icon }       from '../components/Icon'
-import { Navbar }     from '../components/Navbar'
-import { Login }      from '../components/Login'
-import { Register }   from '../components/RegisterForm'
+import { Icon } from '../components/Icon'
+import { Navbar } from '../components/Navbar'
+import { Login } from '../components/Login'
+import { Register } from '../components/RegisterForm'
 import { HeartChart } from '../components/HeartChart.js'
 
 
 
 export const getServerSideProps = async () => {
 
-  try{
+  try {
     await connectDB()
-  
+
     // console.log('-- fetch Heart --')
     const hearts = await User.find()
     // console.log('-- -- -- -- -- -- ')
     // console.log(hearts);
 
 
-    return{
+    return {
       props: { hearts: JSON.stringify(hearts) }
       // props: { hearts }
     }
 
-  } catch (err){
+  } catch (err) {
     console.error(err)
-    return{
+    return {
       notFound: true
     }
   }
@@ -45,7 +45,7 @@ export const getServerSideProps = async () => {
 
 
 
-export default function Love( { hearts } ) {
+export default function Love({ hearts }) {
 
   const { data: session, status } = useSession()
   // console.log(session, status);
@@ -62,26 +62,25 @@ export default function Love( { hearts } ) {
     //TODO why is this showing as undefined?
     const playerOne = filteredArray[0]
 
-    
-    if(playerOne){
+
+    if (playerOne) {
       setplayerHeartCount(playerOne.heartCount)
     }
-    
-    
+
+
     return playerOne
   }
 
   const addHeartIcon = async (color: string) => {
     // setheartsCount(prev => ++prev)
-    // setheartsState(prev => [<AiOutlineHeart />, ...prev])
-    setheartsState((prev) => [<Icon color={color} />, ...prev])
+    // setheartsState((prev) => [<Icon color={color} />, ...prev])
   }
 
   const updateUsersHearts = async (heartsCount: number) => {
 
     setplayerHeartCount(prev => ++prev)
     // console.log(playerHeartCount);
-  
+
 
     const res = await fetch(`/api/users/${session.user.id}`, {
       method: 'PATCH',
@@ -103,7 +102,7 @@ export default function Love( { hearts } ) {
 
   const getHeartIcons = () => {
     usersState.map(usr => {
-      for(let i = 0; i <= usr.heartCount; i++){
+      for (let i = 0; i <= usr.heartCount; i++) {
         addHeartIcon(usr.color)
       }
     })
@@ -120,48 +119,48 @@ export default function Love( { hearts } ) {
     const array = JSON.parse(hearts);
     setusersState(array)
 
-  
+
     return () => {
       console.log('return');
-      
+
     }
   }, [])
 
   useEffect(() => {
     // getHeartIcons()
     getTotalHearts()
-  
+
     return () => {
       console.log('return');
     }
-  }, [usersState])
+  }, [usersState, hearts])
 
   useEffect(() => {
-    if(session){
+    if (session) {
       setplayerHeartCount(session.user.heartCount)
       // console.log(session.user);
-      
+
       //TODO fix having to reload twice on seeing /love page
       filterPlayerOne(usersState, session.user.id)
-      
+
     }
-  
+
     return () => {
       console.log('return');
     }
   }, [session, usersState])
-  
+
 
   return (
     <>
       <Navbar />
       {/* <Login /> */}
       {/* <Register /> */}
-    
+
 
       <div className="haiku">
         <p>
-          Friends forever in time 
+          Friends forever in time
         </p>
         <p>
           Bonded by our hearts and souls
@@ -176,26 +175,26 @@ export default function Love( { hearts } ) {
       {session && (
         <>
           {/* <button onClick={addHeartUser}>new User</button> */}
-          <h2><Icon color={session.user.color}/> {playerHeartCount}</h2>
+          <h2><Icon color={session.user.color} /> {playerHeartCount}</h2>
 
 
           <div className="scoreboard">
             {usersState.map(usr => (
-              <div className='user' key={usr._id} style={{borderBottom: `solid 5px ${usr.color}`}}>
-                <h3 style={{color: usr.color}}>{usr.name}</h3> <span>{usr.heartCount}</span>
+              <div className='user' key={usr._id} style={{ borderBottom: `solid 5px ${usr.color}` }}>
+                <h3 style={{ color: usr.color }}>{usr.name}</h3> <span>{usr.heartCount}</span>
               </div>
             ))}
           </div>
 
           <div className="heart-cont">
-            <HeartChart importData={usersState}/>
+            <HeartChart importData={usersState} />
 
-            <button 
-              onClick={e => updateUsersHearts(session.user.color)} 
+            <button
+              onClick={e => updateUsersHearts(session.user.color)}
               className="btn-heart"
               aria-label="Add 1 Heart"
-              style={{backgroundColor: session.user.color}}
-            > 
+              style={{ backgroundColor: session.user.color }}
+            >
               <RiHeartAddLine />
             </button>
 
@@ -214,7 +213,7 @@ export default function Love( { hearts } ) {
         <h3>Loading...</h3>
       )}
 
-      {!session && status === "unauthenticated" &&(
+      {!session && status === "unauthenticated" && (
         <>
           <h2> *Must be logged in to add Love* </h2>
         </>
