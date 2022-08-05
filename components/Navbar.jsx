@@ -49,7 +49,7 @@ export const Navbar = () => {
           {!session && status === "unauthenticated" && (
             <>
               <Link href='/api/auth/signin' >
-                <a onClick={e => { e.preventDefault(); signIn() }} className='btn' >Sign In</a>
+                <a onClick={e => { e.preventDefault(); signIn() }} className='btn' >Login </a>
               </Link>
             </>
           )}
