@@ -16,14 +16,14 @@ services:
 
   # nginx built inside
   nextlove-app:
-    image: docker-nextjs
+    image: docker-nextlove
     restart: unless-stopped
     build:
       dockerfile: Dockerfile
     ports:
       - 4040:3000 # because nginx is inside this container too
     environment:
-      - MONGO_URI=pinkink.williamusic.com
+      - MONGO_URI=mongo
       - MONGO_PORT=27017
       - MONGO_COLLECTION=pinkinc
       - MONGO_USER=pinkm0nG0user
@@ -32,9 +32,10 @@ services:
       # PROVIDERS
       - GITHUB_ID=
       - GITHUB_SECRET=
-
       - FACEBOOK_ID=
       - FACEBOOK_SECRET=
+
+      - NEXTAUTH_URL=https://pinkinc.williamusic.com
     depends_on:
       - mongo
     networks:
