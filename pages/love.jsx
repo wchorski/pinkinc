@@ -6,7 +6,7 @@ import connectDB from '../db/connection'
 import User from '../models/user'
 
 
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
 import { AiOutlineHeart } from 'react-icons/ai'
 import { RiHeartAddLine } from 'react-icons/ri'
@@ -15,7 +15,7 @@ import { Icon } from '../components/Icon'
 import { Navbar } from '../components/Navbar'
 // import { Login } from '../components/Login'
 // import { Register } from '../components/RegisterForm'
-import { HeartChart } from '../components/HeartChart.js'
+import { HeartChart } from '../components/HeartChart'
 
 
 
@@ -44,16 +44,17 @@ export const getServerSideProps = async () => {
 export default function Love({ hearts }) {
 
   const { data: session, status } = useSession()
+  const childHeartChart = useRef()
 
   const [usersState, setusersState] = useState([])
-  const [heartsCount, setheartsCount] = useState(0)
+  const [heartsTotalCount, setheartsTotalCount] = useState(0)
   const [playerHeartCount, setplayerHeartCount] = useState(0)
+  const [playerObject, setplayerObject] = useState({})
 
 
   const filterPlayerOne = (users, id) => {
     const filteredArray = users.filter(user => user._id === id)
 
-    //TODO why is this showing as undefined?
     const playerOne = filteredArray[0]
 
 
@@ -61,15 +62,24 @@ export default function Love({ hearts }) {
       setplayerHeartCount(playerOne.heartCount)
     }
 
-
+    setplayerObject(playerOne)
     return playerOne
   }
 
 
-  const updateUsersHearts = async (heartsCount) => {
+  const updateUsersHearts = async (heartsTotalCount) => {
 
     setplayerHeartCount(prev => ++prev)
-    // console.log(playerHeartCount);
+    setheartsTotalCount(prev => ++prev)
+
+    const newCount = playerHeartCount + 1
+
+    setplayerObject(prev => ({
+      ...prev, 
+      heartCount: newCount
+    }))
+
+    // console.log(playerObject);
 
 
     const res = await fetch(`/api/users/${session.user.id}`, {
@@ -94,19 +104,18 @@ export default function Love({ hearts }) {
     const array = JSON.parse(hearts);
     setusersState(array)
 
-    usersState.map(usr => {
-      setheartsCount(prev => prev + usr.heartCount)
-    })
+    if(heartsTotalCount <= 0){
+      usersState.map(usr => {
+        setheartsTotalCount(prev => prev + usr.heartCount)
+      })
+    }
 
     return () => {
       console.log('return');
-
     }
   }, [hearts, session])
 
   useEffect(() => {
-    // getHeartIcons()
-    // getTotalHearts()
 
     return () => {
       console.log('return');
@@ -116,9 +125,7 @@ export default function Love({ hearts }) {
   useEffect(() => {
     if (session) {
       setplayerHeartCount(session.user.heartCount)
-      // console.log(session.user);
 
-      //TODO fix having to reload twice on seeing /love page
       filterPlayerOne(usersState, session.user.id)
 
     }
@@ -156,16 +163,10 @@ export default function Love({ hearts }) {
         <section>
           {usersState && (
             <>
-              <h2>{heartsCount} total hearts </h2>
 
               {status === "loading" && (
                 <h3>Loading...</h3>
               )}
-
-              {status === "authenticated" && (
-                <h2><Icon color={session?.user.color} /> {playerHeartCount}</h2>
-              )}
-
 
               <div className="scoreboard">
                 {usersState.map(usr => (
@@ -177,11 +178,19 @@ export default function Love({ hearts }) {
 
 
               <div className="heart-cont">
-                <HeartChart importData={usersState} />
+                {playerObject && (
+                  <>
+                    <h4 className='totalHeartsCount'>{heartsTotalCount} total hearts </h4>
+                    <HeartChart importData={usersState} playerOne={playerObject} ref={childHeartChart}/>
+                  </>
+                )}
 
                 {status === "authenticated" && (
                   <button
-                    onClick={e => updateUsersHearts(session?.user.color)}
+                    onClick={e => {
+                      updateUsersHearts(session?.user.color)
+                      childHeartChart.current.updateChart()
+                    }}
                     className="btn-heart"
                     aria-label="Add 1 Heart"
                     style={{ backgroundColor: session?.user.color }}

@@ -24,7 +24,7 @@
     "**/*.ts",
     "**/*.tsx",
     "pages/api/heart/add.js",
-    "components/HeartChart.js",
+    "components/HeartChart.jsx",
     "pages/_app.tsx",
     "pages/love.jsx",
     "components/Navbar.jsx"

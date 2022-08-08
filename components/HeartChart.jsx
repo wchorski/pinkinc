@@ -1,25 +1,26 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useImperativeHandle, forwardRef } from 'react'
 
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 
-export const HeartChart = ({ importData }) => {
+export const HeartChart = forwardRef(({ importData, playerOne }, ref) => {
 
-  // console.log("importData");
-  // console.log(importData);
+  useImperativeHandle(ref, () => ({
+    updateChart() {
+      formatData(importData)
+    },
+  }))
 
 
   const [dataState, setdataState] = useState()
 
   const formatData = (dtArray) => {
-    // console.log("dtArray")
-    // console.log(dtArray)
 
-    const objAry = [{ name: 'harold', heartCount: 30, color: "#ff00a5" }, { name: 'sally', heartCount: 12, color: "#ff00a5" }]
-    // console.log("objAry");
-    // console.log(objAry);
+    const plyrOneIndex = dtArray.findIndex(usr => usr._id === playerOne._id)
+
+    dtArray[plyrOneIndex] = playerOne;
 
     const fmtData = {
       labels: dtArray.map(data => data.name),
@@ -29,21 +30,20 @@ export const HeartChart = ({ importData }) => {
           data: dtArray.map(data => data.heartCount),
           backgroundColor: dtArray.map(data => data.color),
           borderColor: "black",
-          borderWidth: 1,
+          borderWidth: 2,
         },
       ],
     }
 
     setdataState(fmtData)
-    // console.log("dataState");
-    // console.log(dataState);
-
   }
 
+
   useEffect(() => {
-    // console.log(importData)
 
     formatData(importData)
+    
+
   }, [importData])
 
 
@@ -59,4 +59,4 @@ export const HeartChart = ({ importData }) => {
       )}
     </>
   )
-}
+})

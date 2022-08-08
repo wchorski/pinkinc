@@ -16,7 +16,7 @@ import { Icon } from '../components/Icon'
 import { Navbar } from '../components/Navbar'
 // import { Login } from '../components/Login'
 // import { RegisterForm } from '../components/RegisterForm'
-import { HeartChart } from '../components/HeartChart.js'
+import { HeartChart } from '../components/HeartChart'
 
 
 
