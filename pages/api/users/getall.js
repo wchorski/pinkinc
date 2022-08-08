@@ -12,22 +12,31 @@ import Model from '../../../models/user'
 
 export default async function getall(req, res) {
 
-  const session = await unstable_getServerSession(req, res, authOptions)
+  // const session = await unstable_getServerSession(req, res, authOptions)
   
-  if (session) {
+  // if (session) {
+
+  try{
     await connectDB()
 
     const users = await Model.find();
     if (!users) return res.status(204).json({ 'message': 'No users found' });
-    res.json(users);
 
-    // res.send({
-    //   content: "This is protected content. You can access this content because you are signed in.",
+    // const usersNoPass = users.map(usr =>{
+    //   usr.replace(password, "")
     // })
+    // console.log('usersNoPass')
+    // console.log(usersNoPass)
 
-  } else {
+
+    res.json(users);
+    
+  } catch (err) {
     res.send({
       error: "You must be sign in to view the protected content on this page.",
+      message: err.toString()
     })
   }
+
+  // }
 }

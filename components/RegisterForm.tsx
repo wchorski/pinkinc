@@ -1,11 +1,13 @@
 import React from 'react'
+import { signIn } from "next-auth/react"
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup';
 
 export const RegisterForm = () => {
 
   const RegisterUser = async (values: object) => {
-    console.log(values);
+    // console.log(values);
+    
     try {
       const res = await fetch('/api/users/add', {
         method: 'POST',
@@ -18,6 +20,7 @@ export const RegisterForm = () => {
 
       const data = await res.json()
       // console.log(data)
+      signIn()
 
     } catch (err) {
       console.error(err)

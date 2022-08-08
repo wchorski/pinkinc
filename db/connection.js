@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+// import { createDefaultUsers } from '../config/createDefaultUsers'
 
 const USER = process.env.MONGO_USER
 const PWD = encodeURIComponent(process.env.MONGO_PASSWORD)
@@ -18,6 +19,9 @@ const connectDB = async () => {
     });
 
     console.log('-- Connected to MongoDB -- ')
+
+    // const createDefaultUsers = require('../config/createDefaultUsers')
+    // createDefaultUsers()
 
   } catch (err) {
     console.error(err);

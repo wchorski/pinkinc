@@ -5,6 +5,14 @@ a love letter / website built on Next.js &amp; Typescript
 with next-auth
 
 
+ToDo List
+- stop sending passwords when /users/getall.js
+- set default users when inital app. "0 users found"
+- make user rolls work
+- after register go to login page
+- creating cute loading animation ✅
+
+
 Feature List
 - let user pick color of heart
 - color code heart to users prefered color

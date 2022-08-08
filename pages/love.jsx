@@ -26,10 +26,10 @@ export const getServerSideProps = async () => {
   try {
     await connectDB()
 
-    const hearts = await User.find()
+    const allUsers = await User.find()
 
     return {
-      props: { hearts: JSON.stringify(hearts) }
+      props: { allUsers: JSON.stringify(allUsers) }
       // props: { hearts }
     }
 
@@ -43,7 +43,7 @@ export const getServerSideProps = async () => {
 
 
 
-export default function Love({ hearts }) {
+export default function Love({ allUsers }) {
 
   const { data: session, status } = useSession()
   const childHeartChart = useRef()
@@ -111,7 +111,7 @@ export default function Love({ hearts }) {
 
 
   useEffect(() => {
-    const array = JSON.parse(hearts);
+    const array = JSON.parse(allUsers);
     setusersState(array)
 
     if(heartsTotalCount <= 0){
@@ -123,14 +123,14 @@ export default function Love({ hearts }) {
     return () => {
       console.log('return');
     }
-  }, [hearts, session])
+  }, [allUsers, session])
 
   useEffect(() => {
 
     return () => {
       console.log('return');
     }
-  }, [usersState, hearts])
+  }, [usersState, allUsers])
 
   useEffect(() => {
     if (session) {
