@@ -30,29 +30,45 @@
     left: 2%;
   }
 
-  .btn-heart {
-    background-color: var(--color-highlight);
-    border: solid white 3px;
-    border-radius: 30px;
-    padding: 1em;
-    position: absolute;
-    top: 10%;
-    right: 10%;
-    transition: .01s;
+  .btn-cont{
+    position: relative;
 
-    &:hover {
-      background-color: white;
-      color: var(--color-highlight);
-    }
-
-    &:active {
+    .btn-heart {
       background-color: var(--color-highlight);
-      border: solid var(--color-highlight) 3px;
+      border: solid white 3px;
+      border-radius: 30px;
+      padding: 1em;
+      position: absolute;
+      top: 10%;
+      right: 10%;
+      transition: .01s;
+      position: relative;
+  
+      &:hover {
+        background-color: white;
+        color: var(--color-highlight);
+      }
+  
+      &:active {
+        background-color: var(--color-highlight);
+        border: solid var(--color-highlight) 3px;
+        transform: scale(.9);
+      }
+  
+      svg {
+        font-size: 50px;
+  
+      }
     }
-
-    svg {
-      font-size: 50px;
-
-    }
+  
+    .btn--eyecandy{
+      position: absolute;
+      transition: .01s;
+      
+      svg{
+        font-size: 20px;
+      }
+    } 
   }
+
 }

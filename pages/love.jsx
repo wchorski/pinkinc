@@ -8,6 +8,8 @@ import User from '../models/user'
 
 import React, { useEffect, useState, useRef } from 'react'
 import { useSession, signIn, signOut } from "next-auth/react"
+
+import { useTransition, animated } from 'react-spring'
 import { AiOutlineHeart } from 'react-icons/ai'
 import { RiHeartAddLine } from 'react-icons/ri'
 
@@ -45,11 +47,19 @@ export default function Love({ hearts }) {
 
   const { data: session, status } = useSession()
   const childHeartChart = useRef()
-
+  
   const [usersState, setusersState] = useState([])
   const [heartsTotalCount, setheartsTotalCount] = useState(0)
   const [playerHeartCount, setplayerHeartCount] = useState(0)
   const [playerObject, setplayerObject] = useState({})
+
+  const [isEyeCandy, setisEyeCandy] = useState(false)
+  const transpring = useTransition(isEyeCandy, {
+    config: {mass:.3, tension:900, friction:30},
+    from: {x: 0, y: 50,   opacity: 0.1},
+    enter: {x: 0,   y: 0,     opacity: 1.0},
+    leave: {x: 0, y: -50,  opacity: 0.1},
+  })
 
 
   const filterPlayerOne = (users, id) => {
@@ -186,17 +196,30 @@ export default function Love({ hearts }) {
                 )}
 
                 {status === "authenticated" && (
-                  <button
-                    onClick={e => {
-                      updateUsersHearts(session?.user.color)
-                      childHeartChart.current.updateChart()
-                    }}
-                    className="btn-heart"
-                    aria-label="Add 1 Heart"
-                    style={{ backgroundColor: session?.user.color }}
-                  >
-                    <RiHeartAddLine />
-                  </button>
+                  <div className="btn-cont">
+                    <button
+                      onClick={e => {
+                        updateUsersHearts(session?.user.color)
+                        childHeartChart.current.updateChart()
+                      }}
+                      onMouseDown={e => setisEyeCandy(true)}
+                      onMouseUp={e => setisEyeCandy(false)}
+                      className="btn-heart"
+                      aria-label="Add 1 Heart"
+                      style={{ backgroundColor: session?.user.color }}
+                    >
+                      <RiHeartAddLine />
+                    </button>
+
+                    {/* <span className={`btn--eyecandy ${isEyeCandy ? 'active' : ''}`}><RiHeartAddLine /></span> */}
+                    
+                    {/* // TODO Animate  */}
+                    {transpring((style, item) =>
+                      item 
+                        ? <animated.span className={`btn--eyecandy`} style={{color: session?.user.color, ...style}} > <AiOutlineHeart /> </animated.span>
+                        : ''
+                    )}
+                  </div>
                 )}
 
                 {status === "unauthenticated" && (
