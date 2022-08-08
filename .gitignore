@@ -1,4 +1,6 @@
 database
+database/*
+database/***
 
 # Logs
 logs
