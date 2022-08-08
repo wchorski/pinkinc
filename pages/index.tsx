@@ -7,21 +7,26 @@ import connectDB from '../db/connection'
 import User from '../models/user'
 import defaultUsersJSON from '../config/defaultUsers.json'
 import styles from '../styles/Home.module.css'
+import { Navbar } from '../components/Navbar'
 
 
 const Home: NextPage = () => {
 
 
   return (
-    <div className={styles.container}>
+    <>
       <Head>
         <title>Next Love</title>
         <meta name="description" content="A love letter by William Chorski" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
-        <Link href={`/love`}   > Love </Link>
+      <Navbar />
+
+      <main className='mainBody'>
+        <section style={{ textAlign: "center" }}>
+          <Link href={`/love`} > Love </Link>
+        </section>
         {/* <h1 className={styles.title}>
           Welcome to <a href="https://nextjs.org">Next.js!</a>
         </h1>
@@ -74,7 +79,7 @@ const Home: NextPage = () => {
           </span>
         </a>
       </footer>
-    </div>
+    </>
   )
 }
 

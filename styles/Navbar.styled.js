@@ -2,16 +2,16 @@ import styled from 'styled-components'
 
 
 export const StyledNavBar = styled.div`
+  background-color: var(--color-nav);
   width: 100%;
   /* background-color: var(--color-base); */
   position: sticky;
   top: 0rem;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   z-index: 500;
 
 
   .nav-bg-main{
-    background-color: var(--color-base);
     // width: 100%;
     max-width: var(--width-cont);
     margin: 0 auto;
@@ -20,12 +20,17 @@ export const StyledNavBar = styled.div`
     flex-direction: column;
     // align-items: center;
     justify-content: flex-start;
+    
+    position: relative;
   }
   .nav-bg-sub{
     // background-color: #1a1a22;
     // box-shadow: #0000008a 3px 3px 5px;
     // max-width: var(--width-cont);
     // margin: 0 auto;
+    position: absolute;
+    top: 15px;
+    right: 0;
 
     display: flex;
     flex-direction: column;

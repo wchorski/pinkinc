@@ -7,19 +7,19 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 export const HeartChart = ({ importData }) => {
 
-  console.log("importData");
-  console.log(importData);
+  // console.log("importData");
+  // console.log(importData);
 
 
   const [dataState, setdataState] = useState()
 
   const formatData = (dtArray) => {
-    console.log("dtArray")
-    console.log(dtArray)
+    // console.log("dtArray")
+    // console.log(dtArray)
 
     const objAry = [{ name: 'harold', heartCount: 30, color: "#ff00a5" }, { name: 'sally', heartCount: 12, color: "#ff00a5" }]
-    console.log("objAry");
-    console.log(objAry);
+    // console.log("objAry");
+    // console.log(objAry);
 
     const fmtData = {
       labels: dtArray.map(data => data.name),
@@ -35,13 +35,13 @@ export const HeartChart = ({ importData }) => {
     }
 
     setdataState(fmtData)
-    console.log("dataState");
-    console.log(dataState);
+    // console.log("dataState");
+    // console.log(dataState);
 
   }
 
   useEffect(() => {
-    console.log(importData)
+    // console.log(importData)
 
     formatData(importData)
   }, [importData])

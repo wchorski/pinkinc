@@ -24,11 +24,7 @@ export const getServerSideProps = async () => {
   try {
     await connectDB()
 
-    // console.log('-- fetch Heart --')
     const hearts = await User.find()
-    // console.log('-- -- -- -- -- -- ')
-    // console.log(hearts);
-
 
     return {
       props: { hearts: JSON.stringify(hearts) }
@@ -48,9 +44,7 @@ export const getServerSideProps = async () => {
 export default function Love({ hearts }) {
 
   const { data: session, status } = useSession()
-  // console.log(session, status);
 
-  const [heartsState, setheartsState] = useState([])
   const [usersState, setusersState] = useState([])
   const [heartsCount, setheartsCount] = useState(0)
   const [playerHeartCount, setplayerHeartCount] = useState(0)
@@ -71,10 +65,6 @@ export default function Love({ hearts }) {
     return playerOne
   }
 
-  const addHeartIcon = async (color) => {
-    // setheartsCount(prev => ++prev)
-    // setheartsState((prev) => [<Icon color={color} />, ...prev])
-  }
 
   const updateUsersHearts = async (heartsCount) => {
 
@@ -100,25 +90,13 @@ export default function Love({ hearts }) {
 
 
 
-  const getHeartIcons = () => {
-    usersState.map(usr => {
-      for (let i = 0; i <= usr.heartCount; i++) {
-        addHeartIcon(usr.color)
-      }
-    })
-  }
-
-  const getTotalHearts = () => {
-    usersState.map(usr => {
-      setheartsCount(prev => prev + usr.heartCount)
-    })
-  }
-
-
   useEffect(() => {
     const array = JSON.parse(hearts);
     setusersState(array)
 
+    usersState.map(usr => {
+      setheartsCount(prev => prev + usr.heartCount)
+    })
 
     return () => {
       console.log('return');
@@ -128,7 +106,7 @@ export default function Love({ hearts }) {
 
   useEffect(() => {
     // getHeartIcons()
-    getTotalHearts()
+    // getTotalHearts()
 
     return () => {
       console.log('return');
@@ -158,66 +136,71 @@ export default function Love({ hearts }) {
       {/* <Register /> */}
 
 
-      <div className="haiku">
-        <p>
-          Friends forever in time
-        </p>
-        <p>
-          Bonded by our hearts and souls
-        </p>
-        <p>
-          Love forever lasting!
-        </p>
-        <a href="https://www.familyfriendpoems.com/collection/love-haiku-poems/">- Sandy Maloof </a>
-      </div>
+      <main className='mainBody'>
 
-      {status === "authenticated" && usersState && (
-        <>
-          {/* <button onClick={addHeartUser}>new User</button> */}
-          <h2><Icon color={session.user?.color} /> {playerHeartCount}</h2>
+        <section>
+          <div className="haiku">
+            <p>
+              Friends forever in time
+            </p>
+            <p>
+              Bonded by our hearts and souls
+            </p>
+            <p>
+              Love forever lasting!
+            </p>
+            <a href="https://www.familyfriendpoems.com/collection/love-haiku-poems/">- Sandy Maloof </a>
+          </div>
+        </section>
+
+        <section>
+          {usersState && (
+            <>
+              <h2>{heartsCount} total hearts </h2>
+
+              {status === "loading" && (
+                <h3>Loading...</h3>
+              )}
+
+              {status === "authenticated" && (
+                <h2><Icon color={session?.user.color} /> {playerHeartCount}</h2>
+              )}
 
 
-          <div className="scoreboard">
-            {usersState.map(usr => (
-              <div className='user' key={usr._id} style={{ borderBottom: `solid 5px ${usr.color}` }}>
-                <h3 style={{ color: usr.color }}>{usr.name}</h3> <span>{usr.heartCount}</span>
+              <div className="scoreboard">
+                {usersState.map(usr => (
+                  <div className='user' key={usr._id} style={{ borderBottom: `solid 5px ${usr.color}` }}>
+                    <h3 style={{ color: usr.color }}>{usr.name}</h3> <span>{usr.heartCount}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-
-          <div className="heart-cont">
-            <HeartChart importData={usersState} />
-
-            <button
-              onClick={e => updateUsersHearts(session.user?.color)}
-              className="btn-heart"
-              aria-label="Add 1 Heart"
-              style={{ backgroundColor: session.user?.color }}
-            >
-              <RiHeartAddLine />
-            </button>
-
-          </div>
-
-          <h2>{heartsCount} total hearts </h2>
 
 
-          {/* <div className="hearts-cont">
-            {heartsState}
-          </div> */}
-        </>
-      )}
+              <div className="heart-cont">
+                <HeartChart importData={usersState} />
 
-      {status === "loading" && (
-        <h3>Loading...</h3>
-      )}
+                {status === "authenticated" && (
+                  <button
+                    onClick={e => updateUsersHearts(session?.user.color)}
+                    className="btn-heart"
+                    aria-label="Add 1 Heart"
+                    style={{ backgroundColor: session?.user.color }}
+                  >
+                    <RiHeartAddLine />
+                  </button>
+                )}
 
-      {status === "unauthenticated" && (
-        <>
-          <h2> *Must be logged in to add Love* </h2>
-        </>
-      )}
+                {status === "unauthenticated" && (
+                  <h2> *Must be logged <br /> in to add Love </h2>
+                )}
 
+              </div>
+            </>
+          )}
+
+        </section>
+
+      </main>
     </>
   )
 }

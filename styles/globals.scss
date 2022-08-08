@@ -5,39 +5,56 @@
 
 
 
+* {
+  box-sizing: border-box;
+  transition: .2s;
+}
+
 html,
 body {
+  background-color: var(--color-base);
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
 }
 
+main.mainBody {
+  background-color: black;
+  max-width: var(--width-cont);
+  margin: 0 auto;
+}
+
+section {
+  padding: 1em;
+  margin: 1em 0;
+  background-color: var(--color-bg);
+}
+
 a {
   /* color: inherit; */
-  color: aqua;
-  /* text-decoration: none; */
+  color: var(--color-highlight)
+    /* text-decoration: none; */
 }
+
 a:hover {
   color: cadetblue;
 }
 
-* {
-  box-sizing: border-box;
-  transition: .2s;
-}
 
 button {
   cursor: pointer;
 }
+
 // TODO make btn--inline btn--big btn--mid
-.btn{
+.btn {
   background-color: transparent;
   border: solid 1px var(--color-highlight);
   border-radius: 3px;
-  padding: 0 .5rem;
+  padding: 0 .8rem;
+  text-decoration: none;
 
-  &:hover{
+  &:hover {
     background-color: var(--color-highlight);
     color: black;
   }
@@ -47,6 +64,7 @@ button {
   html {
     color-scheme: dark;
   }
+
   body {
     color: white;
     background: black;
