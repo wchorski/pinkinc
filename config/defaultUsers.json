@@ -1,7 +1,7 @@
 [
   {
     "email": "gill@example.com",
-    "password": "passmeoutside",
+    "password": "pa55meoutsid3",
     "name": "Gill",
     "image": "https://www.pinclipart.com/picdir/big/137-1370958_welcome-to-reddit-politoed-beta-clipart.png",
     "color": "#30a977",
@@ -14,7 +14,7 @@
   },
   {
     "email": "nemo@example.com",
-    "password": "passmeoutside",
+    "password": "pa55meoutsid3",
     "name": "Nemo",
     "image": "https://i.pinimg.com/originals/17/74/1e/17741e3139e169aa04be3935b3edc60e.png",
     "color": "#ff00a5",

@@ -92,19 +92,23 @@ export default function Love({ allUsers }) {
     // console.log(playerObject);
 
 
-    const res = await fetch(`/api/users/${session.user.id}`, {
-      method: 'PATCH',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-
-      body: JSON.stringify({
-        heartCount: playerHeartCount,
-        _id: session.user.id
+    try{
+      const res = await fetch(`/api/users/${session.user.id}`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+  
+        body: JSON.stringify({
+          heartCount: playerHeartCount,
+          _id: session.user.id
+        })
       })
-    })
-
-    const data = await res.json()
+  
+      const data = await res.json()
+    } catch (err){
+      console.error(err);
+    }
     // console.log(data)
   }
 

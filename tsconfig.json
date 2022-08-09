@@ -23,11 +23,8 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx",
-    "pages/api/heart/add.js",
-    "components/HeartChart.jsx",
     "pages/_app.tsx",
-    "pages/love.jsx",
-    "components/Navbar.jsx"
+
   ],
   "exclude": [
     "node_modules"

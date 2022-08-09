@@ -26,9 +26,7 @@ import Model from '../../../models/user'
 export default async function usersByID(req, res) {
 
   if (req.method === 'PATCH') {
-
     // console.log("* method PATCH === " + req.method)
-    // console.log(req.body.heartCount);
 
     try {
       const user = await Model.findById(req.body._id)
@@ -44,9 +42,11 @@ export default async function usersByID(req, res) {
 
 
   if (req.method === 'GET') {
-    console.log("* method GET === " + req.method)
+    // console.log("* method GET === " + req.method)
+
     try {
-      console.log("get one User: " + req.query.id);
+      const user = await Model.findById(req.query.id)
+      res.status(200).json(user)
 
     } catch (error) {
       return res.status(404).json({ success: false, message: error.toString() })
