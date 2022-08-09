@@ -7,28 +7,25 @@ import connectDB from '../db/connection'
 import Model from '../models/user'
 import fakeData from './defaultUsers.json'
 
-
-const createDefaultUsers  = async (req, res) => {
+export default async function createDefaultUsers(req, res) {
   try {
     // await connectDB()
     const users = await Model.find();
-    console.log('-- create default --');
-    console.log(users);
 
-    if (users.length === 0){
+    if (users.length === 0) {
       console.log('-- NO USERS FOUND --');
+      console.log('-- CREATING DEFAULT --');
 
-      fakeData.map(usr => {
-        const addUser = require('../pages/api/users/add')
-        addUser(usr)
+      fakeData.map(async (usr) => {
+        const newUser = await Model.create(usr);
+        console.log(newUser);
       })
+
+      console.log('-- -- -- -- -- --');
     }
 
   } catch (err) {
-    res.status(400).json({ status: 'failed to create default user', message: err.toString() })
+    console.log('no users created');
+    // res.status(400).json({ status: 'failed to create default user', message: err.toString() })
   }
-
-  return null
 }
-
-module.exports = createDefaultUsers
