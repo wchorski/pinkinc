@@ -4,7 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-
+HeartChart.displayName = "HeartChart"
 export const HeartChart = forwardRef(({ importData, playerOne }, ref) => {
 
   useImperativeHandle(ref, () => ({
@@ -42,7 +42,7 @@ export const HeartChart = forwardRef(({ importData, playerOne }, ref) => {
   useEffect(() => {
 
     formatData(importData)
-    
+
 
   }, [importData])
 
