@@ -6,6 +6,7 @@
 import connectDB from '../db/connection'
 import Model from '../models/user'
 import fakeData from './defaultUsers.json'
+const bcrypt = require('bcrypt');
 
 export default async function createDefaultUsers(req, res) {
   try {
@@ -17,7 +18,17 @@ export default async function createDefaultUsers(req, res) {
       console.log('-- CREATING DEFAULT --');
 
       fakeData.map(async (usr) => {
-        const newUser = await Model.create(usr);
+
+        const { email, name, password, color } = usr
+
+        const hashedPwd = await bcrypt.hash(password, 10);
+
+        const newUser = await Model.create({
+          "email": email,
+          "name": name,
+          "color": color,
+          "password": hashedPwd
+        });
         console.log(newUser);
       })
 
