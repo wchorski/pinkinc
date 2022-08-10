@@ -3,6 +3,7 @@ import {Navbar} from '../components/Navbar'
 import { UserTable } from '../components/UserTable'
 
 export default function admin() {
+
   return (
     <>
       <Navbar />

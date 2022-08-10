@@ -49,7 +49,7 @@ export default NextAuth({
         await connectDB()
         const foundUser = await Model.findOne({ email: credentials.email }).exec();
 
-        console.log("found user: " + foundUser);
+        console.log("user login: " + foundUser.email);
 
         if (foundUser === null) {
           console.log('i dont exist');
@@ -65,7 +65,8 @@ export default NextAuth({
             id: foundUser._id,
             name: foundUser.name,
             email: foundUser.email,
-            color: foundUser.color
+            color: foundUser.color,
+            roles: foundUser.roles
           }
         }
 
@@ -81,9 +82,11 @@ export default NextAuth({
   ],
   callbacks: {
     jwt: async ({ token, user }) => {
+      console.log(user);
       if (user) {
         token.id = user.id,
-          token.color = user.color
+        token.color = user.color
+        token.roles = user.roles
 
       }
       return token
@@ -91,7 +94,8 @@ export default NextAuth({
     session: ({ session, token }) => {
       if (token) {
         session.user.id = token.id,
-          session.user.color = token.color
+        session.user.color = token.color
+        session.user.roles = token.roles
 
       }
       return session

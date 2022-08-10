@@ -20,7 +20,7 @@ export const RegisterForm = () => {
 
       const data = await res.json()
       // console.log(data)
-      signIn()
+      signIn('yourProviderHere', { callbackUrl: '/love' })
 
     } catch (err) {
       console.error(err)

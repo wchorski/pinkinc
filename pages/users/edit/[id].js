@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { useSession, getSession } from "next-auth/react"
+import ROLES_LIST from '../../../config/roles_list'
 import { useRouter } from "next/router";
 import { Formik, Form, Field } from 'formik'
 import * as Yup from 'yup'
@@ -13,13 +15,10 @@ import { Loading } from "../../../components/Loading";
 
 
 
-const ROLES = {
-  'Admin': 5150,
-  'Editor': 1984,
-  'User': 2001,
-}
+
 export default function UserEditor() {
 
+  const { data: session, status } = useSession()
   const { query, isReady, push: routerPush } = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
@@ -55,14 +54,14 @@ export default function UserEditor() {
       color: values.color,
       password: '',
       roles: {
-        "User": 0,
-        "Editor": 0,
-        "Admin": 0
+        "subscriber": 0,
+        "editor": 0,
+        "admin": 0
       }
     }
-    values.admin            ? convertData.roles.Admin = ROLES.Admin   : convertData.roles.Admin = 0
-    values.editor           ? convertData.roles.Editor = ROLES.Editor : convertData.roles.Editor = 0
-    values.user             ? convertData.roles.User = ROLES.User     : convertData.roles.User = 0
+    values.admin            ? convertData.roles.admin = ROLES_LIST.admin           : convertData.roles.admin = 0
+    values.editor           ? convertData.roles.editor = ROLES_LIST.editor         : convertData.roles.editor = 0
+    values.subscriber       ? convertData.roles.subscriber = ROLES_LIST.subscriber : convertData.roles.subscriber = 0
     values.password !== ''  ? convertData.password = values.password : delete convertData.password
 
     try{
@@ -101,7 +100,7 @@ export default function UserEditor() {
 
     admin: Yup.boolean(),
     editor: Yup.boolean(),
-    user: Yup.boolean(),
+    subscriber: Yup.boolean(),
     // TODO how to validate object?
     // roles: Yup.object()
     //   .required('* 1 role is required!')
@@ -114,6 +113,12 @@ export default function UserEditor() {
 
   return (
 
+    <>
+    {(status === "unauthenticated") && (
+      <h3>login to edit user</h3>
+    )}
+
+    {(status === "authenticated") && (
     <main className='mainBody'>
       {isLoading && (
         <Loading />
@@ -129,9 +134,9 @@ export default function UserEditor() {
             color: userState.color || 'undefined', 
             password: '', 
             passwordConf:'', 
-            admin: userState.roles?.Admin === ROLES.Admin ? true : false  || false,
-            editor: userState.roles?.Editor === ROLES.Editor ? true : false || false,
-            user: userState.roles?.User === ROLES.User ? true : false || false,
+            admin:      userState.roles?.admin      === ROLES_LIST.admin ? true : false  || false,
+            editor:     userState.roles?.editor     === ROLES_LIST.editor ? true : false || false,
+            subscriber: userState.roles?.subscriber === ROLES_LIST.subscriber ? true : false || false,
           }}
           validationSchema={UserSchema}
           validateOnChange={false} // disable on every keystroke
@@ -143,72 +148,74 @@ export default function UserEditor() {
         >
           {({ errors, touched, values }) => (
             <>
-            <main className="mainBody">
+              <main className="mainBody">
 
-              <StyledPost>
+                <StyledPost>
 
-                <Form>
-                  <p><HiOutlineMail/> {userState.email}</p>
+                  <Form>
+                    <p><HiOutlineMail/> {userState.email}</p>
 
-                  <div className='form-item'>
-                    <FaUserAlt />
-                    <Field name="name" type="text" placeholder="name..." className='author'/>
-                    {errors.name && touched.name ? (
-                      <span className='formErr'>{errors.name}</span>
-                      ) : null}
-                  </div>
-
-                  <div className='form-item'>
-                    <FaUserAlt />
-                    <Field name="color" type="color"  className='color'/>
-                    {errors.color && touched.color ? (
-                      <span className='formErr'>{errors.color}</span>
-                      ) : null}
-                  </div>
-                  <br/>
-
-                  <div className='changepassword'>
-                    <h3>Change Password</h3>
                     <div className='form-item'>
+                      <FaUserAlt />
+                      <Field name="name" type="text" placeholder="name..." className='author'/>
+                      {errors.name && touched.name ? (
+                        <span className='formErr'>{errors.name}</span>
+                        ) : null}
+                    </div>
+
+                    <div className='form-item'>
+                      <FaUserAlt />
+                      <Field name="color" type="color"  className='color'/>
+                      {errors.color && touched.color ? (
+                        <span className='formErr'>{errors.color}</span>
+                        ) : null}
+                    </div>
+                    <br/>
+
+                    <div className='changepassword'>
+                      <h3>Change Password</h3>
+                      <div className='form-item'>
+                        <MdPassword className='ico'/>
+                        <Field name="password" type="password" placeholder="password..." className='author' autoComplete="off"/>
+                        {errors.password && touched.password ? (
+                          <span className='formErr'>{errors.password}</span>
+                          ) : null}
+                      </div>
+                      <div className='form-item'>
                       <MdPassword className='ico'/>
-                      <Field name="password" type="password" placeholder="password..." className='author' autoComplete="off"/>
-                      {errors.password && touched.password ? (
-                        <span className='formErr'>{errors.password}</span>
-                        ) : null}
+                        <Field name="passwordConf" type="password" placeholder="confirm password..." className='author' autoComplete="off"/>
+                        {errors.passwordConf && touched.passwordConf ? (
+                          <span className='formErr'>{errors.passwordConf}</span>
+                          ) : null}
+                      </div>
                     </div>
+                    <br/>
+
                     <div className='form-item'>
-                    <MdPassword className='ico'/>
-                      <Field name="passwordConf" type="password" placeholder="confirm password..." className='author' autoComplete="off"/>
-                      {errors.passwordConf && touched.passwordConf ? (
-                        <span className='formErr'>{errors.passwordConf}</span>
+                      <Field type="checkbox" name="admin"/> Admin <br/>
+                      <Field type="checkbox" name="editor" /> Editor <br/> 
+                      <Field type="checkbox" name="subscriber" /> Subscriber <br/> 
+                      {/* <Field type="checkbox" name="checked" value="User" /> User <br/> */}
+                      {errors.roles && touched.roles ? (
+                        <span className='formErr'>{errors.roles}</span>
                         ) : null}
                     </div>
-                  </div>
-                  <br/>
+                    
+                      <div className='editBtns'>
+                        <button className='submitPost' type='submit'>Update User</button>
+                        <button className='deleteBtn' type='button' onClick={() => routerPush('/admin')}> <FcCancel /> </button>
+                      </div>
+                  </Form>
 
-                  <div className='form-item'>
-                    <Field type="checkbox" name="admin"/> Admin <br/>
-                    <Field type="checkbox" name="editor" /> Editor <br/> 
-                    <Field type="checkbox" name="user" /> User <br/> 
-                    {/* <Field type="checkbox" name="checked" value="User" /> User <br/> */}
-                    {errors.roles && touched.roles ? (
-                      <span className='formErr'>{errors.roles}</span>
-                      ) : null}
-                  </div>
-                  
-                    <div className='editBtns'>
-                      <button className='submitPost' type='submit'>Update User</button>
-                      <button className='deleteBtn' type='button' onClick={() => routerPush('/admin')}> <FcCancel /> </button>
-                    </div>
-                </Form>
-
-              </StyledPost>
-            </main>
-            </>
-            )}
-        </Formik>
-        </section>
-      )}
-    </main>
+                </StyledPost>
+              </main>
+              </>
+              )}
+          </Formik>
+          </section>
+        )}
+      </main>
+    )}
+    </>
   )
 }

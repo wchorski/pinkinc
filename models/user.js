@@ -33,12 +33,12 @@ const userSchema = new mongoose.Schema({
   },
 
   roles: {
-    User: {
-        type: Number,
-        default: 2001
+    subscriber: {
+      type: Number,
+      default: 2003
     },
-    Editor: Number,
-    Admin: Number
+    editor: Number,
+    admin: Number
   },
   refreshToken: String,
   expires: Date

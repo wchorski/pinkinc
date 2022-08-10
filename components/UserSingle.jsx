@@ -29,9 +29,9 @@ export const UserSingle = (props) => {
               <tr>
                 <th>Role(s):</th>
                 <td>
-                  {props.roles.Admin ? 'Admin, ' : ''} 
-                  {props.roles.Editor ? 'Editor, ' : ''}
-                  {props.roles.User ? 'User ' : ''}
+                  {props.roles.admin ? 'Admin, ' : ''} 
+                  {props.roles.editor ? 'Editor, ' : ''}
+                  {props.roles.subscriber ? 'Subscriber ' : ''}
                 </td>
               </tr>
               <tr>

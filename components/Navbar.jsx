@@ -1,6 +1,9 @@
 import React from 'react'
 import { useSession, getSession, signIn, signOut } from "next-auth/react"
+import ROLES_LIST from '../config/roles_list'
+import { useRouter } from "next/router";
 import Link from 'next/link'
+import LinkActive from './LinkActive'
 
 import { BsEmojiHeartEyes } from 'react-icons/bs'
 
@@ -15,7 +18,11 @@ export const Navbar = () => {
 
   //* RETURN * * * * * * * * *
   const { data: session, status } = useSession()
-  // const { data: status } = useSession()
+  const { pathname: urlPathname } = useRouter();
+
+  const highlight = {
+    backgroundColor: urlPathname === '/admin' ? "var(--color-alt)" : ''
+  }
 
 
   return (
@@ -25,9 +32,19 @@ export const Navbar = () => {
         <nav className="main">
           <ul>
             <li key={1}> <Link href={`/`}           > Home </Link> </li>
-            <li key={2}> <Link href={`/love`}       > Love </Link> </li>
+            <li key={5}> <LinkActive name={'HomeActive'} href={'/'}/></li>
+            <li key={2}> 
+              <LinkActive name={'LoveActive'} href={'/love'}/>
+            </li>
+            <li key={6}>
+              <Link href={`/love`}> Love </Link> 
+            </li>
             <li key={3}> <Link href={`/register`}   > register </Link> </li>
-            <li key={4}> <Link href={`/admin`}      > Admin </Link> </li>
+
+            {session && session.user.roles.admin === ROLES_LIST.admin && (
+              <li key={4} style={highlight}> <Link href={`/admin`}      > Admin </Link> </li>
+            )}
+
           </ul>
         </nav>
 

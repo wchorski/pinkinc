@@ -43,7 +43,7 @@ export const UserTable = ( {} ) => {
       // TODO remove this and just use json delete / parse
       let prettyUser = {
         email: user.email,
-        username: user.username,
+        name: user.name,
         roles: whatRole(user),
         _id: user._id,
         color: user.color,
@@ -57,15 +57,17 @@ export const UserTable = ( {} ) => {
 
   const whatRole = (obj) => {
 
-    const {roles: { Admin, Editor, User }} = obj 
-    if(Admin){
+    const {roles: { admin, editor, subscriber }} = obj 
+
+    // TODO i'm sure you could make this much prettier
+    if(admin){
       return 'Admin';
 
-    } else if(Editor){
-      return 'Editor';
+    } else if(editor){
+      return 'editor';
 
-    } else if(User){
-      return 'User';
+    } else if(subscriber){
+      return 'subscriber';
 
     } else {
       return 'this user is a NOBODY';
@@ -90,9 +92,9 @@ export const UserTable = ( {} ) => {
       accessor: 'email'
     },
     {
-      Header: 'Username',
-      Footer: 'Username',
-      accessor: 'username',
+      Header: 'Name',
+      Footer: 'Name',
+      accessor: 'name',
     },
     {
       Header: 'Role',

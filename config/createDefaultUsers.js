@@ -19,7 +19,7 @@ export default async function createDefaultUsers(req, res) {
 
       fakeData.map(async (usr) => {
 
-        const { email, name, password, color } = usr
+        const { email, name, password, color, roles } = usr
 
         const hashedPwd = await bcrypt.hash(password, 10);
 
@@ -27,7 +27,8 @@ export default async function createDefaultUsers(req, res) {
           "email": email,
           "name": name,
           "color": color,
-          "password": hashedPwd
+          "password": hashedPwd,
+          "roles": roles
         });
         console.log(newUser);
       })
