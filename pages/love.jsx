@@ -18,6 +18,7 @@ import { Navbar } from '../components/Navbar'
 // import { Login } from '../components/Login'
 // import { Register } from '../components/RegisterForm'
 import { HeartChart } from '../components/HeartChart'
+import { Loading } from '../components/Loading'
 
 
 
@@ -179,7 +180,7 @@ export default function Love({ allUsers }) {
             <>
 
               {status === "loading" && (
-                <h3>Loading...</h3>
+                <Loading />
               )}
 
               <div className="scoreboard">

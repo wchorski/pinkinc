@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import Link from 'next/link'
 import { useRouter } from "next/router";
 import { FaTrashAlt, FaSkullCrossbones, FaEject, FaUserEdit } from 'react-icons/fa'
+import { StyledPopUp } from '../../styles/popup.styled'
 
 import { UserSingle } from '../../components/UserSingle'
 import { Navbar } from "../../components/Navbar";
 
 export default function UserById() {
 
-  const { query, isReady } = useRouter();
+  const { query, isReady, push: routerPush } = useRouter();
 
   const [isLoading, setIsLoading] = useState(true);
   const [userState, setuserState] = useState({username: "NoName"});
@@ -46,14 +47,17 @@ export default function UserById() {
 
   }, [isReady])
 
-  const deleteUser = async (_id) => {
+  const deleteUser = async (id) => {
     try {
-      const res = await fetch(`/users/${query.id}`, {
+      console.log('delete: ' + id);
+      const res = await fetch(`/api/users/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
       })
+
+      // routerPush('/admin')
 
     } catch (err) {
       console.error(err)
@@ -66,31 +70,40 @@ export default function UserById() {
       <Navbar />
 
       <main className='mainBody'>
-        <section>
-          <div className="editBtns">
-            <button className='deleteBtn btn' onClick={() => toggleAreYouSure()}> <FaTrashAlt /> </button>
-            <Link href={`/users/edit/${query.id}`} className='editMe btn'>
-              <a><FaUserEdit /></a>
-            </Link>
-          </div>
 
-          {isAreYouSure && (
-            <StyledPopUp>
-              <h3>Delete User</h3>
-              <button className='editBtn' onClick={() => deleteUser(_id)}> yes I'm sure <FaSkullCrossbones /> </button>
-              <button className='editBtn' onClick={() => toggleAreYouSure()}> no, take me back <FaEject /> </button>
-            </StyledPopUp>
+        {userState && (
+          <section>
+            <div className="editBtns">
+              <button className='deleteBtn btn' onClick={() => toggleAreYouSure()}> <FaTrashAlt /> </button>
+              <Link href={`/users/edit/${query.id}`} className='editMe btn'>
+                <a><FaUserEdit /></a>
+              </Link>
+            </div>
+
+            {isAreYouSure && (
+              <StyledPopUp>
+                <h3>Delete User</h3>
+                <button className='editBtn' onClick={() => deleteUser(query.id)}> yes I'm sure <FaSkullCrossbones /> </button>
+                <button className='editBtn' onClick={() => toggleAreYouSure()}> no, take me back <FaEject /> </button>
+              </StyledPopUp>
+            )}
+
+            {isLoading && (
+              <h3>loading...</h3>
+            )}
+
+            {!isLoading && (
+              <UserSingle {...userState} />
+            )}
+
+          </section>
+        )}
+
+          {!userState && (
+            <section>
+              <h2> User Not Found </h2>
+            </section>
           )}
-
-          {isLoading && (
-            <h3>loading...</h3>
-          )}
-
-          {!isLoading && (
-            <UserSingle {...userState} />
-          )}
-
-        </section>
       </main>
     </>
   )

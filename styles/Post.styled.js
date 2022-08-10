@@ -2,7 +2,10 @@ import styled from 'styled-components'
 
 
 export const StyledPost = styled.div`
-  background-color: #131d27;
+
+  background-color: var(--color-nav);
+  border: solid var(--color-highlight) 3px;
+  border-radius: 15px;
   padding: 1rem;
   margin: .1rem;
   border-radius: .3rem;

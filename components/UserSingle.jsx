@@ -23,6 +23,10 @@ export const UserSingle = (props) => {
                 <td>{props.name}</td>
               </tr>
               <tr>
+                <th>Fav Color:</th>
+                <td style={{backgroundColor: props.color, color: 'black', fontWeight: 'bold'}}>{props.color}</td>
+              </tr>
+              <tr>
                 <th>Role(s):</th>
                 <td>
                   {props.roles.Admin ? 'Admin, ' : ''} 

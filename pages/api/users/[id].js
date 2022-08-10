@@ -6,6 +6,7 @@
 import { stringify } from 'querystring';
 import connectDB from '../../../db/connection'
 import Model from '../../../models/user'
+const bcrypt = require('bcrypt');
 
 // export default async function getServerSideProps (context) {
 //   if (req.method === 'PATCH') {
@@ -25,12 +26,34 @@ import Model from '../../../models/user'
 
 export default async function usersByID(req, res) {
 
-  if (req.method === 'PATCH') {
-    // console.log("* method PATCH === " + req.method)
-
+  console.log(req.method);
+  if (req.method === 'GET') {
+    // console.log("* method GET === " + req.method)
     try {
+      await connectDB()
+
+      const user = await Model.findById(req.query.id)
+      res.status(200).json(user)
+
+    } catch (error) {
+      return res.status(404).json({ success: false, message: error.toString() })
+    }
+  }
+
+  if (req.method === 'PATCH') {
+    console.log("* method PATCH === " + req.method)
+    try {
+      await connectDB()
+
       const user = await Model.findById(req.body._id)
-      Object.assign(user, req.body)
+
+      const usrCryptPass = req.body;
+
+      if(req.body.password){
+        const hashedPwd = await bcrypt.hash(req.body.password, 10)
+        usrCryptPass.password = hashedPwd
+      }
+      Object.assign(user, usrCryptPass)
       res.status(200).json(user)
       user.save()
 
@@ -40,13 +63,13 @@ export default async function usersByID(req, res) {
     }
   }
 
-
-  if (req.method === 'GET') {
-    // console.log("* method GET === " + req.method)
-
+  if (req.method === 'DELETE') {
+    console.log("* method DELETE === " + req.method)
     try {
-      const user = await Model.findById(req.query.id)
-      res.status(200).json(user)
+      await connectDB()
+
+      const user = await Model.findByIdAndDelete(req.query.id)
+      res.status(200).json({...user, message: "user deleted"})
 
     } catch (error) {
       return res.status(404).json({ success: false, message: error.toString() })

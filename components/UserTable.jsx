@@ -4,6 +4,7 @@ import { useTable, useSortBy } from 'react-table'
 import { FaSortAmountUp,  FaSortAmountDownAlt} from 'react-icons/fa'
 
 import { StyledGigTable } from '../styles/GigTable.styled'
+import { Loading } from './Loading'
 
 
 
@@ -11,6 +12,7 @@ export const UserTable = ( {} ) => {
 
 
   const controller = new AbortController();
+  const [isLoading, setIsLoading] = useState(true);
   const [usersState, setusersState] = useState([]);
 
   const getAllUsers = async () => {
@@ -25,7 +27,7 @@ export const UserTable = ( {} ) => {
 
       const destAry = destructArray(data)
       setusersState(destAry)
-
+      setIsLoading(false)
 			// console.log(data);
 
     } catch (err){
@@ -44,6 +46,7 @@ export const UserTable = ( {} ) => {
         username: user.username,
         roles: whatRole(user),
         _id: user._id,
+        color: user.color,
         account: <Link href={`/users/${user._id}`}> account </Link> 
       }
       prettyArr.push(prettyUser)
@@ -97,9 +100,9 @@ export const UserTable = ( {} ) => {
       accessor: 'roles',
     },
     {
-      Header: 'ID',
-      Footer: 'ID',
-      accessor: '_id',
+      Header: 'Fav Color',
+      Footer: 'Fav Color',
+      accessor: 'color',
     },
     {
       Header: '',
@@ -121,11 +124,15 @@ export const UserTable = ( {} ) => {
   return (
 
     <StyledGigTable>
+        {isLoading && (
+          <Loading />
+        )}
 
       <div className="postTable">
 
-        <table {...getTableProps()}>
 
+        <table {...getTableProps()}>
+          
           <thead>
             {headerGroups.map((headGrp, i) => (
               <tr {...headGrp.getHeaderGroupProps()} key={i} className='header'>
@@ -141,21 +148,23 @@ export const UserTable = ( {} ) => {
             ))}
           </thead>
 
-          <tbody {...getTableBodyProps()}>
-            {rows.map((row, i) => {
-              prepareRow(row)
-              return (
-                <tr {...row.getRowProps()} key={i}>
-                  {row.cells.map(cell => {
+          {!isLoading && (
+            <tbody {...getTableBodyProps()}>
+              {rows.map((row, i) => {
+                prepareRow(row)
+                return (
+                  <tr {...row.getRowProps()} key={i}>
+                    {row.cells.map(cell => {
 
-                    return (
-                      <td {...cell.getCellProps()}> {cell.render('Cell')}</td>
-                    )
-                  })}
-                </tr>
-              )
-            })}
-          </tbody>
+                      return (
+                        <td {...cell.getCellProps()}> {cell.render('Cell')}</td>
+                      )
+                    })}
+                  </tr>
+                )
+              })}
+            </tbody>
+          )}
 
           <tfoot>
             {footerGroups.map(footerGrp => (
