@@ -76,6 +76,7 @@ export const StyledNavBar = styled.div`
           text-align: center;
           padding: 1rem .8rem;
           display: inline-block;
+          text-decoration: none;
           // height: 200px;
   
           color: white;

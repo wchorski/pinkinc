@@ -8,6 +8,7 @@ import Model from '../../../models/user'
 const bcrypt = require('bcrypt');
 
 import NextAuth from 'next-auth'
+import type { NextAuthOptions } from 'next-auth'
 // import AppleProvider from 'next-auth/providers/apple'
 // import GoogleProvider from 'next-auth/providers/google'
 // import EmailProvider from 'next-auth/providers/email'
@@ -15,8 +16,10 @@ import FacebookProvider from 'next-auth/providers/facebook'
 import GithubProvider from "next-auth/providers/github"
 import CredentialProvider from 'next-auth/providers/credentials'
 
+
+
 // TODO add all these env 
-export default NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     // OAuth authentication providers...
     // AppleProvider({
@@ -81,7 +84,7 @@ export default NextAuth({
     // }),
   ],
   callbacks: {
-    jwt: async ({ token, user }) => {
+    jwt: async ({ token, user }: any) => {
       console.log(user);
       if (user) {
         token.id = user.id,
@@ -91,7 +94,7 @@ export default NextAuth({
       }
       return token
     },
-    session: ({ session, token }) => {
+    session: ({ session, token }: any) => {
       if (token) {
         session.user.id = token.id,
         session.user.color = token.color
@@ -106,8 +109,6 @@ export default NextAuth({
     secret: "super*St0NGSe7ctret#",
     encryption: true,
   }
-})
+}
 
-const handleLogin = async (credentials) => {
-
-} 
+export default NextAuth(authOptions)

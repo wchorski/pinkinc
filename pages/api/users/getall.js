@@ -3,8 +3,9 @@
  * @param {import('next').NextApiResponse} res
 */
 
-import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from "../auth/[...nextauth]"
+import { unstable_getServerSession } from "next-auth/next"
+import { useSession } from "next-auth/react"
 
 import connectDB from '../../../db/connection'
 import Model from '../../../models/user'

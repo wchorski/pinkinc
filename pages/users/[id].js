@@ -57,7 +57,7 @@ export default function UserById() {
         },
       })
 
-      // routerPush('/admin')
+      routerPush('/admin')
 
     } catch (err) {
       console.error(err)
