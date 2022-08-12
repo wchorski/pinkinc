@@ -4,7 +4,6 @@ import Link from 'next/link'
 export default function ActiveLink({ name, href }) {
   const { pathname: urlPathname, push: routerPush  } = useRouter();
 
-  console.log(href + ' : ' + urlPathname);
 
   const style = {
     backgroundColor: urlPathname === href ? 'var(--color-alt)' : '',

@@ -77,9 +77,9 @@ export const UserTable = ( {} ) => {
   useEffect(() => {
     getAllUsers()
 
-    return () => {
-      console.log('return');
-    }
+    // return () => {
+    //   console.log('return');
+    // }
   }, [])
 
   //? TABLE #################################

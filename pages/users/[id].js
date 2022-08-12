@@ -6,6 +6,7 @@ import { StyledPopUp } from '../../styles/popup.styled'
 
 import { UserSingle } from '../../components/UserSingle'
 import { Navbar } from "../../components/Navbar";
+import { Loading } from "../../components/Loading";
 
 export default function UserById() {
 
@@ -16,6 +17,7 @@ export default function UserById() {
 
 
   const getUserInfo = async () => {
+    console.log('getuserinfo');
     try {
       const res = await fetch(`/api/users/${query.id}`, {
         method: 'GET',
@@ -30,9 +32,7 @@ export default function UserById() {
 
     } catch (err) {
       console.error(err);
-
     }
-    
   }
 
   const [isAreYouSure, setisAreYouSure] = useState(false)
@@ -46,6 +46,13 @@ export default function UserById() {
     getUserInfo()
 
   }, [isReady])
+
+  // useEffect(() => {
+
+
+  //   getUserInfo()
+
+  // }, [])
 
   const deleteUser = async (id) => {
     try {
@@ -89,7 +96,7 @@ export default function UserById() {
             )}
 
             {isLoading && (
-              <h3>loading...</h3>
+              <Loading />
             )}
 
             {!isLoading && (

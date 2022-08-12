@@ -34,7 +34,7 @@ export const StyledPost = styled.div`
     background-color: transparent;
     border: none;
     border-top: solid #162737 2px;
-    max-width: 800px
+    max-width: 800px;
 
     margin-top: 1rem;
     padding-top: 1rem;

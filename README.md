@@ -11,6 +11,7 @@ ToDo List
 - make user rolls work
 - after register go to login page
 - creating cute loading animation ✅
+- let users edit themselves, but not other users
 
 
 Feature List

@@ -6,7 +6,7 @@ export const Loading = () => {
 
   const [isShown, setisShown ] = useState(false)
   const transpring = useTransition(isShown, {
-    config: {mass:.3, tension:500, friction:30},
+    config: {mass:.1, tension:100, friction:50},
     from: {x: 50, y: 0,   opacity: 0.1},
     enter: {x: 0,   y: 0,     opacity: 1.0},
     leave: {x: 50, y: 0,  opacity: 0.1},

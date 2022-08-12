@@ -62,6 +62,7 @@ export const UserEditorForm = ( {} ) => {
     values.subscriber       ? convertData.roles.subscriber = ROLES_LIST.subscriber : convertData.roles.subscriber = 0
     values.password !== ''  ? convertData.password = values.password : delete convertData.password
 
+    console.log(convertData);
     try{
 
       const res = await fetch(`/api/users/${query.id}`, {

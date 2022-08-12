@@ -41,7 +41,6 @@ export const UserSingle = (props) => {
             </tbody>
           </table>
         </div>
-
       </StyledGigTable>
     </>
   )

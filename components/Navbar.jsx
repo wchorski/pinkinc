@@ -8,11 +8,6 @@ import { BsEmojiHeartEyes } from 'react-icons/bs'
 
 import { StyledNavBar } from '../styles/Navbar.styled'
 
-// export async function getServerSideProps(ctx: any) {
-//   const session = await getSession(ctx)
-//   return ({ props: { session } })
-// }
-
 export const Navbar = () => {
 
   const { data: session, status } = useSession()
