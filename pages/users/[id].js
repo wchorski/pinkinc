@@ -44,7 +44,8 @@ export default function UserById() {
     if(!isReady) return
 
     getUserInfo()
-
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady])
 
   // useEffect(() => {
@@ -90,7 +91,7 @@ export default function UserById() {
             {isAreYouSure && (
               <StyledPopUp>
                 <h3>Delete User</h3>
-                <button className='editBtn' onClick={() => deleteUser(query.id)}> yes I'm sure <FaSkullCrossbones /> </button>
+                <button className='editBtn' onClick={() => deleteUser(query.id)}> yes I am sure <FaSkullCrossbones /> </button>
                 <button className='editBtn' onClick={() => toggleAreYouSure()}> no, take me back <FaEject /> </button>
               </StyledPopUp>
             )}

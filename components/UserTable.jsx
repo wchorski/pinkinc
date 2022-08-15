@@ -80,6 +80,8 @@ export const UserTable = ( {} ) => {
     // return () => {
     //   console.log('return');
     // }
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   //? TABLE #################################
@@ -156,10 +158,10 @@ export const UserTable = ( {} ) => {
                 prepareRow(row)
                 return (
                   <tr {...row.getRowProps()} key={i}>
-                    {row.cells.map(cell => {
+                    {row.cells.map((cell, i) => {
 
                       return (
-                        <td {...cell.getCellProps()}> {cell.render('Cell')}</td>
+                        <td {...cell.getCellProps()} key={i}> {cell.render('Cell')}</td>
                       )
                     })}
                   </tr>
@@ -169,8 +171,8 @@ export const UserTable = ( {} ) => {
           )}
 
           <tfoot>
-            {footerGroups.map(footerGrp => (
-              <tr {...footerGrp.getFooterGroupProps()}>
+            {footerGroups.map((footerGrp, i) => (
+              <tr {...footerGrp.getFooterGroupProps()} key={i}>
                 {footerGrp.headers.map((column, i) => (
                   <td {...column.getFooterProps} key={i}>
                     {column.render('Footer')}

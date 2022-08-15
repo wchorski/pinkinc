@@ -179,7 +179,7 @@ export default function Love({ hearts }) {
 
 
           <div className="scoreboard">
-            {usersState.map(usr => (
+            {usersState.map((usr: any) => (
               <div className='user' key={usr._id} style={{ borderBottom: `solid 5px ${usr.color}` }}>
                 <h3 style={{ color: usr.color }}>{usr.name}</h3> <span>{usr.heartCount}</span>
               </div>

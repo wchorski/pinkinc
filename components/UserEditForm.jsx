@@ -86,7 +86,8 @@ export const UserEditorForm = ( {} ) => {
     if(!isReady) return
 
     getUserInfo()
-
+    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isReady])
 
 

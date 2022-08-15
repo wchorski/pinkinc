@@ -7,7 +7,7 @@ import User from '../models/user'
 
 
 import React, { useEffect, useState, useRef } from 'react'
-import { useSession, signIn, signOut } from "next-auth/react"
+import { useSession } from "next-auth/react"
 
 import { useTransition, animated } from 'react-spring'
 import { AiOutlineHeart } from 'react-icons/ai'
@@ -128,6 +128,8 @@ export default function Love({ allUsers }) {
     return () => {
       console.log('return');
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [allUsers, session])
 
   useEffect(() => {

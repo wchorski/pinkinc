@@ -31,12 +31,16 @@ export const authOptions: NextAuthOptions = {
     //   clientSecret: process.env.GOOGLE_SECRET
     // }),
     FacebookProvider({
+      // @ts-ignore
       clientId: process.env.FACEBOOK_ID,
+      // @ts-ignore
       clientSecret: process.env.FACEBOOK_SECRET
     }),
 
     GithubProvider({
+      // @ts-ignore
       clientId: process.env.GITHUB_ID,
+      // @ts-ignore
       clientSecret: process.env.GITHUB_SECRET,
     }),
 
@@ -46,7 +50,7 @@ export const authOptions: NextAuthOptions = {
         email: { label: "Email", type: "email", placeholder: "love@mail.com" },
         password: { label: "Password", type: "password", placeholder: "..." },
       },
-      authorize: async (credentials) => {
+      authorize: async (credentials: any) => {
 
         // todo database lookup
         await connectDB()
@@ -107,6 +111,7 @@ export const authOptions: NextAuthOptions = {
   secret: "super*St0NGSe7ctret#",
   jwt: {
     secret: "super*St0NGSe7ctret#",
+    // @ts-ignore
     encryption: true,
   }
 }

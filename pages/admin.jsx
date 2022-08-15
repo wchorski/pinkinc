@@ -1,12 +1,12 @@
 import React from 'react'
-import { useSession,} from "next-auth/react"
+import { useSession } from "next-auth/react"
 import ROLES_LIST from '../config/roles_list'
 import { MdAdminPanelSettings } from 'react-icons/md'
 
 import {Navbar} from '../components/Navbar'
 import { UserTable } from '../components/UserTable'
 
-export default function admin() {
+export default function Admin() {
 
   const { data: session, status } = useSession()
 

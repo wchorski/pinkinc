@@ -43,7 +43,7 @@ export const HeartChart = forwardRef(({ importData, playerOne }, ref) => {
 
     formatData(importData)
 
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [importData])
 
 
