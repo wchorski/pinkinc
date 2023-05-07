@@ -22,7 +22,8 @@ export const Navbar = () => {
             <li key={1}> <LinkActive name={'Home'} href={'/'}/></li>
             <li key={2}> <LinkActive name={'Love'} href={'/love'}/></li>
             <li key={2}> <LinkActive name={'Jeff'} href={'/jeff'}/></li>
-            <li key={3}> <LinkActive name={'Register'} href={'/register'}/></li>
+            <li key={3}> <LinkActive name={'Honey 🐝'} href={'/honeybee'}/></li>
+            <li key={4}> <LinkActive name={'Register'} href={'/register'}/></li>
 
             {session && session.user.roles.admin === ROLES_LIST.admin && (
               <li key={4}> <LinkActive name={'Admin'} href={'/admin'}/></li>
