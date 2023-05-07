@@ -75,7 +75,7 @@ export default function HoneyBeePage() {
 
 
 const StyledBubbleBg = styled.div`
-  height: 100vh;
+  min-height: 100vh;
   width: 100vw;
   background: linear-gradient(to bottom, #edfffa 0%, #d63185 100%);
   position: relative;
@@ -83,10 +83,11 @@ const StyledBubbleBg = styled.div`
 
   main{
     background-color: transparent;
+    height: 100%;
   }
 
   section{
-    margin: 3em;
+    margin: 1em;
     border-radius: 2em;
   }
 
