@@ -3,69 +3,73 @@ import styled from 'styled-components'
 export default function HoneyBeePage() {
 
   return (
-    <main className='mainBody'>
+    <StyledBubbleBg className='canvas'>
+      <main className='mainBody'>
 
-      <StyledBubbleBg className='canvas'>
-        <h1> My Honey 🐝</h1>
+        <section>
 
-        <p>{`As you know, my way with words is as about as dense as a a pack of Styrofoam. Packaging aside, I think we make a good package. I hope that even with the tough love, we can also enjoy the easy going sweet love.   If you don't know already, I care about you deeply and your unrest to make a home with me no matter where we are.`}</p>
+          <h1> My Honey 🐝</h1>
 
-        <p>{`I enjoy our chill nights in, and our raging times about. One could say I like you inside & out. The bonds we've created hold us through thick and thin. Our joined  connection of Mild to Spicy flavor, our audacious choice in provocative (synonym for Floozie) sound, and a picture of life that makes us Link & Click.`}</p>
+          <p>{`As you know, my way with words is as about as dense as a a pack of Styrofoam. Packaging aside, I think we make a good package. I hope that even with the tough love, we can also enjoy the easy going sweet love.   If you don't know already, I care about you deeply and your unrest to make a home with me no matter where we are.`}</p>
 
-        <p>{`With you there is something always new on the horizon. Even without our festival we'll still find ways to Werk It for summer, cuddle in winter, and everything else in between.`}</p>
+          <p>{`I enjoy our chill nights in, and our raging times about. One could say I like you inside & out. The bonds we've created hold us through thick and thin. Our joined  connection of Mild to Spicy flavor, our audacious choice in provocative (synonym for Floozie) sound, and a picture of life that makes us Link & Click.`}</p>
 
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-        <div className='bubble'></div>
-      </StyledBubbleBg>
-    </main>
+          <p>{`With you there is something always new on the horizon. Even without our festival we'll still find ways to Werk It for summer, cuddle in winter, and everything else in between.`}</p>
+        </section>
+
+
+      </main>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+      <div className='bubble'></div>
+    </StyledBubbleBg>
   )
 }
 
@@ -76,6 +80,15 @@ const StyledBubbleBg = styled.div`
   background: linear-gradient(to bottom, #edfffa 0%, #d63185 100%);
   position: relative;
   overflow: hidden;
+
+  main{
+    background-color: transparent;
+  }
+
+  section{
+    margin: 3em;
+    border-radius: 2em;
+  }
 
   .bubble {
     display: block;
