@@ -72,3 +72,9 @@ button {
     background: black;
   }
 }
+
+nav.main{
+  a.active{
+    background-color: var(--color-highlight);
+  }
+}

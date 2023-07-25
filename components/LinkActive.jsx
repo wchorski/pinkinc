@@ -16,7 +16,7 @@ export default function ActiveLink({ name, href }) {
 
   return (
     <Link href={href}>
-      <a style={style} onClick={handleClick} className='hurdur'> 
+      <a onClick={handleClick} className={urlPathname === href ? 'active' : ''}> 
         {name} 
       </a>
     </Link> 
