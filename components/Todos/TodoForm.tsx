@@ -3,6 +3,7 @@ import { InputObj, Note } from "../../types/types"
 import { FormEvent } from "react"
 import useForm2 from "../../lib/useForm2"
 import { FormInput } from "../elements/FormInput"
+import { MdAdd } from "react-icons/md";
 
 type Props = {
   // refetchData: any,
@@ -75,6 +76,7 @@ export function TodoForm({id, setTodosState}:Props) {
       const data:Note = await res.json()
       // console.log(data);
       setTodosState(data.todos)
+      resetForm()
       
     } catch (err){
       console.error(err);
@@ -121,7 +123,7 @@ export function TodoForm({id, setTodosState}:Props) {
 
 
 
-      <button type="submit"> submit </button>
+      <button type="submit"> <MdAdd /> </button>
     </StyledTodoForm>
   )
 }
@@ -131,6 +133,7 @@ const StyledTodoForm = styled.form`
 
   max-width: 30rem;
   display: flex;
+  margin-top: 1rem;
 
   legend{
     font-size: 1.7rem;
@@ -156,7 +159,7 @@ const StyledTodoForm = styled.form`
 
   button[type="submit"]{
     margin-left: auto;
-    margin-top: 1rem;
+    /* margin-top: 1rem; */
     float: right;
   }
 `

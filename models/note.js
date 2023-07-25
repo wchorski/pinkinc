@@ -20,6 +20,10 @@ const noteSchema = new mongoose.Schema({
     type: String,
     default: "normal"
   },
+  status: {
+    type: String,
+    default: "current"
+  },
   todos: [todoSchema],
 });
 

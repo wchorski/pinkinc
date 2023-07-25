@@ -108,7 +108,7 @@ const StyledInputLabel = styled.label`
 
   input{
     /* padding: 15px; */
-    margin: 10px 0px;
+    /* margin: 10px 0px; */
     border-radius: 5px;
     border: 1px solid gray;
   }
@@ -142,13 +142,14 @@ const StyledInputLabel = styled.label`
     z-index: 1;
     
     left: 5px;
+    top: -8px;
     transform: translateY(-20%)
     
   }
 
   span.tooltip {
     font-size: 12px;
-    padding: 3px;
+    /* padding: 3px; */
     display: block;
     transition: all .3s;
 

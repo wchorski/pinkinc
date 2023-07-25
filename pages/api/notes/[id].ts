@@ -43,11 +43,9 @@ export default async function notessByID(req:any, res:any) {
       // console.log("query id: ", req.query.id);
       const item = await Model.findById(req.query.id)    
       const updateData = req.body;
-
       
-
       item.todos.map((todo:Todo) => {
-        if(todo?.message === updateData.todos[0]?.message){  // if checkbox is checked          
+        if(updateData.todos[0] && todo?.message === updateData.todos[0]?.message){  // if checkbox is checked          
           todo.status = updateData.todos[0].status
           console.log(todo?.message);
           
@@ -57,6 +55,7 @@ export default async function notessByID(req:any, res:any) {
 
       
       item.todos = [...item.todos, ...updateData.todos]
+      item.status = updateData.status
       const filteredTodos = item.todos.filter((obj:Todo) => obj.status !== 'delete');
       item.todos = filteredTodos
       

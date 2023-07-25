@@ -5,6 +5,7 @@ export type Todo = {
 
 export type Note = {
   _id:string,
+  status: 'current'|'completed'|'trash'|'delete'
   title:string,
   color:string,
   dateCreated:string,
