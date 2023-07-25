@@ -5,7 +5,7 @@
 
 
 import connectDB from '../../../db/connection'
-import Model from '../../../models/todo'
+import Model from '../../../models/note'
 
 
 export default async function getall(req:any, res:any) {
@@ -14,13 +14,13 @@ export default async function getall(req:any, res:any) {
     await connectDB()
 
     const items = await Model.find();
-    if (!items) return res.status(204).json({ 'message': 'No todos found' });
+    if (!items) return res.status(204).json({ 'message': 'No notes found' });
 
     res.json(items);
     
   } catch (err) {
     res.send({
-      error: "idk todos not here",
+      error: "idk notes not here",
       // @ts-ignore
       message: err.toString()
     })

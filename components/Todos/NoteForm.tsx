@@ -60,7 +60,7 @@ export function NoteForm({refetchData}:Props) {
     e.preventDefault()
 
     try {
-      const res = await fetch('/api/todos/add', {
+      const res = await fetch('/api/notes/add', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

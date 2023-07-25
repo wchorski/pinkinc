@@ -65,7 +65,7 @@ export function TodoForm({id, setTodosState}:Props) {
     // console.log(valuesFormat);
   
     try{
-      const res = await fetch(`/api/todos/${id}`, {
+      const res = await fetch(`/api/notes/${id}`, {
         method: 'PATCH',
         headers: {'Content-Type': 'application/json' },
   

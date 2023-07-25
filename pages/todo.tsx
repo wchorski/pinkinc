@@ -2,9 +2,10 @@ import styled from "styled-components"
 import { MdAdd } from "react-icons/md";
 import { NoteForm } from "../components/Todos/NoteForm";
 import { Note, Todo } from "../types/types";
-import { useEffect, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { TodoForm } from "../components/Todos/TodoForm";
 import { MdDelete } from "react-icons/md";
+import { NoteItem } from "../components/Todos/NoteItem";
 
 type Props = {
 
@@ -85,7 +86,7 @@ export default function TodoPage() {
 
   const getAll = async () => {
     try{
-      const res = await fetch(`/api/todos/getall`,{
+      const res = await fetch(`/api/notes/getall`,{
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -182,75 +183,4 @@ const StyledNotesPage = styled.ul`
   }
 
 
-`
-
-function NoteItem({_id, title, color, type, todos}:Note){
-
-  const [todosState, setTodosState] = useState<Todo[]>(todos)
-
-  return(
-    <StyledTodo color={color}>
-      <h4 className="title"> {title} </h4>
-
-      <ul className="todos">
-        {todosState.map((todo, i) => (
-          <li key={i}>
-            <input type="checkbox" defaultChecked={todo.status === 'completed' ? true : false}/>
-            <span className="message">{todo.message}</span>
-            <button className="delete"> <MdDelete /> </button>
-          </li>
-        ))}
-
-        <li>
-          <TodoForm id={_id} setTodosState={setTodosState}/>
-        </li>
-      </ul>
-    </StyledTodo>
-  )
-}
-
-// type
-// PIKMIN THEME
-// gocery - chef kirby
-// fun - pikachu innertube sunglasses
-// chores - something sweeping floor?
-
-
-const StyledTodo = styled.article<{color:string}>`
-  background-color: ${p => p.color};
-  padding: 1rem;
-  border-radius: 5px;
-
-  .title{
-    font-size: 1.5rem;
-    margin-top: 0;
-    margin-bottom: 1rem;
-    mix-blend-mode: difference;
-  }
-
-  ul.todos{
-    padding-left: 0;
-    list-style: none;
-    mix-blend-mode: difference;
-
-    input[type='checkbox']{
-      margin-right: .6rem;
-    }
-
-    li{
-      margin-bottom: .4rem;
-      display: flex;
-
-      &:has(input:checked){
-        .message{
-          text-decoration: line-through;
-          opacity: .5;
-        }
-      }
-
-      button.delete{
-        margin-left: auto;
-      }
-    }
-  }
 `

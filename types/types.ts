@@ -1,5 +1,5 @@
 export type Todo = {
-  status: 'current'|'completed'|'canceled'
+  status: 'current'|'completed'|'canceled'|'delete'
   message:string,
 }
 

@@ -4,16 +4,14 @@
 */
 
 import connectDB from '../../../db/connection'
-import Model from '../../../models/todo'
+import Model from '../../../models/note'
 
-export default async function addTodo(req:any, res:any) {
+export default async function addNote(req:any, res:any) {
 
   try {
     const { title, color, dateCreated, dateDue, type, todos } = req.body
-
-    // console.log('-- connecting to mongo --');
+    // console.log(req.body);
     await connectDB()
-    // console.log('-- CONNECTED to mongo --');
 
     //create and store the new user
     const newItem = await Model.create({
@@ -24,14 +22,9 @@ export default async function addTodo(req:any, res:any) {
       type,
       todos,
     });
-    console.log(newItem);
+    // console.log(newItem);
 
-    // console.log('-- users/add.js --')
-    // const newModel = await Model.create(newUser) 
-    // console.log(req.body)
-    // console.log('-- -- -- -- -- -- ')
-
-    res.status(201).json({ success: true, message: `new todo create: ${newItem}` })
+    res.status(201).json({ success: true, message: `new note create: ${newItem}` })
 
   } catch (err) {
     console.error(err)

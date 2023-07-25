@@ -5,16 +5,17 @@
 
 import { stringify } from 'querystring';
 import connectDB from '../../../db/connection'
-import Model from '../../../models/todo'
+import Model from '../../../models/note'
 
 import { authOptions } from "../auth/[...nextauth]"
 import ROLES_LIST from '../../../config/roles_list'
 import { unstable_getServerSession } from "next-auth/next"
+import { Todo } from '../../../types/types';
 
 
-export default async function todosByID(req:any, res:any) {
+export default async function notessByID(req:any, res:any) {
 
-  console.log(req.method);
+  console.log('+ - + - + ' + req.method + ' | Notes by ID' + ' + - + - +');
   // if (req.method === 'GET') {
   //   // console.log("* method GET === " + req.method)
   //   try {
@@ -36,21 +37,31 @@ export default async function todosByID(req:any, res:any) {
 
 
   if (req.method === 'PATCH') {
-    console.log("* method PATCH === " + req.method)
 
     try {
       await connectDB()
-
-      const item = await Model.findById(req.body._id)      
+      // console.log("query id: ", req.query.id);
+      const item = await Model.findById(req.query.id)    
       const updateData = req.body;
-      // console.log(updateData);
 
-      item.todos = [...item.todos, ...updateData.todos]
-      // Object.assign(item, updateData)
-      // console.log(item);
       
-      res.status(200).json(item)
+
+      item.todos.map((todo:Todo) => {
+        if(todo?.message === updateData.todos[0]?.message){  // if checkbox is checked          
+          todo.status = updateData.todos[0].status
+          console.log(todo?.message);
+          
+          updateData.todos.shift()
+        }
+      })
+
+      
+      item.todos = [...item.todos, ...updateData.todos]
+      const filteredTodos = item.todos.filter((obj:Todo) => obj.status !== 'delete');
+      item.todos = filteredTodos
+      
       item.save()
+      res.status(200).json(item)
       return
 
     } catch (err) {

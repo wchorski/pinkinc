@@ -1,7 +1,13 @@
 // import { Schema, model, models } from 'mongoose'
 import mongoose from 'mongoose'
 
+
 const todoSchema = new mongoose.Schema({
+  status: String,
+  message: String,
+});
+
+const noteSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
@@ -14,11 +20,9 @@ const todoSchema = new mongoose.Schema({
     type: String,
     default: "normal"
   },
-  todos: {
-    type: Array,
-  },
+  todos: [todoSchema],
 });
 
 // const User = models.User || model('User', todoSchema)
 // export default User
-export default mongoose.models.Todo || mongoose.model('Todo', todoSchema)
+export default mongoose.models.Note || mongoose.model('Note', noteSchema)
