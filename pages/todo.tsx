@@ -132,6 +132,8 @@ export default function TodoPage() {
         </li> */}
       </ul>
 
+      <hr />
+
       <h2> Completed </h2>
       <ul className="notes completed">
         {notesState.filter(note => note.status === 'completed').map(note => (
@@ -297,6 +299,12 @@ const StyledNotesPage = styled.div`
     }
     &.four{
       right: 35%;
+    }
+  }
+
+  @media screen and (width < 600px){
+    .flower{
+      bottom: -100px;
     }
   }
 

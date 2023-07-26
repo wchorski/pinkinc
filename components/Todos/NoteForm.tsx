@@ -20,7 +20,7 @@ export function NoteForm({refetchData}:Props) {
       errorMessage: 'title name error',
       required: true,
       initial: '',
-      // pattern: '',
+      pattern: '[a-zA-Z0-9 ]+',
       // disabled:true,
     },
     {
@@ -220,6 +220,7 @@ const StyledTodoForm = styled.form<{color:string}>`
   fieldset{
     display: flex;
     flex-direction: column;
+    background-color: black;
 
     /* label{
       display: flex;
