@@ -238,7 +238,6 @@ const StyledNotesPage = styled.div`
   }
 
   .bg, .fg{
-    border: dotted cyan 3px;
     position: fixed;
     /* object-fit: cover; */
     
