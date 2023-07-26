@@ -3,9 +3,9 @@ import { TodoForm } from "./TodoForm"
 import { Note, Todo } from "../../types/types"
 import { useState } from "react"
 import { MdCheck, MdDelete, MdRecycling } from "react-icons/md";
+import Image from "next/image";
 
 export function NoteItem(props:Note){
-  
   
   const [thisState, setThisState] = useState<Note>(props)
   const [todosState, setTodosState] = useState<Todo[]>(props.todos)
@@ -75,8 +75,23 @@ export function NoteItem(props:Note){
 
   // }
 
+  function randomLeftRight(){
+    const dirs = ['left', 'right']
+    const randomIndex = Math.floor(Math.random() * dirs.length);
+    return dirs[randomIndex];
+  }
+  function randomTopBottom(){
+    const dirs = ['top', 'bottom']
+    const randomIndex = Math.floor(Math.random() * dirs.length);
+    return dirs[randomIndex];
+  }
+
   return(
     <StyledNote color={color} status={status}>
+      <figure className={`pikmin ${randomLeftRight()} ${randomTopBottom()}`}>
+        <Image src={`/assets/pikmin/${color}-1.webp`} alt="background image" height={90} width={70}/>
+      </figure>
+
       <nav className="note-options">
         <span className="status">
           {status === 'completed' && (
@@ -133,8 +148,12 @@ export function NoteItem(props:Note){
 // chores - something sweeping floor?
 
 
+
 const StyledNote = styled.article<{color:string, status:'current'|'completed'|'trash'|'delete'}>`
-  background-color: ${p => p.color};
+  
+  background-color: white;
+  background: ${p => `var(--cg-${p.color})`};
+
   padding: 1rem;
   border-radius: 5px;
   position: relative;
@@ -150,6 +169,10 @@ const StyledNote = styled.article<{color:string, status:'current'|'completed'|'t
     .status{
       margin-right: auto;
       padding: 0 .5rem;
+
+      svg{
+        color: limegreen
+      }
     }
   }
 
@@ -185,4 +208,24 @@ const StyledNote = styled.article<{color:string, status:'current'|'completed'|'t
       }
     }
   }
+
+  .pikmin{
+    margin: 0;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .top{
+    top: -3em;
+  }
+  .bottom{
+    top: -3em;
+  }
+  .left{
+    left: -2em;
+  }
+  .right{
+    right: -2em;
+  }
+  
 `

@@ -14,7 +14,7 @@ const noteSchema = new mongoose.Schema({
   },
   color: {
     type: String,
-    default: "#ff00a5"
+    default: "pink"
   },
   type: {
     type: String,

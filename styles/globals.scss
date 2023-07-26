@@ -5,7 +5,16 @@
 @use './editbuttons.scss';
 @use './loading.scss';
 
-
+:root{
+  --cg-yellow: linear-gradient(142deg, hsl(52, 78%, 83%) 0%, hsl(52, 44%, 65%) 86%, hsl(52, 33%, 54%) 100%);
+  --cg-blue: linear-gradient(142deg, hsl(245, 78%, 53%) 0%, hsl(245, 44%, 53%) 86%, hsl(245, 33%, 53%) 100%);
+  --cg-red: linear-gradient(142deg, hsl(0, 78%, 33%) 0%, hsl(0, 44%, 53%) 86%, hsl(0, 33%, 53%) 100%);
+  --cg-pink: linear-gradient(142deg, hsl(299, 37%, 71%) 0%, hsl(299, 42%, 64%) 86%, hsl(298, 25%, 49%) 100%);
+  --cg-cyan: linear-gradient(142deg, hsl(190, 36%, 71%) 0%, hsl(183, 42%, 64%) 86%, hsl(181, 25%, 49%) 100%);
+  --cg-purple: linear-gradient(142deg, hsl(279, 36%, 71%) 0%, hsl(284, 42%, 64%) 86%, hsl(286, 25%, 49%) 100%);
+  --cg-white: linear-gradient(142deg, hsl(180, 7%, 88%) 0%, hsl(285, 4%, 78%) 86%, hsl(300, 1%, 59%) 100%);
+  --cg-green: linear-gradient(142deg, hsl(124, 36%, 71%) 0%, hsl(137, 42%, 64%) 86%, hsl(128, 25%, 49%) 100%);
+}
 
 * {
   box-sizing: border-box;
@@ -14,11 +23,12 @@
 
 html,
 body {
-  background-color: var(--color-base);
+  // background-color: var(--color-base);
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  // z-index: -9999;
 }
 
 main.mainBody {

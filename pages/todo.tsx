@@ -6,6 +6,7 @@ import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { TodoForm } from "../components/Todos/TodoForm";
 import { MdDelete } from "react-icons/md";
 import { NoteItem } from "../components/Todos/NoteItem";
+import Image from "next/image";
 
 type Props = {
 
@@ -115,7 +116,7 @@ export default function TodoPage() {
   return (<>
     <StyledNotesPage>
       <ul className="notes">
-        {notesState.map(note => (
+        {notesState.filter(note => note.status === 'current').map(note => (
           <li key={note._id}>
             <NoteItem {...note} />
           </li>
@@ -123,18 +124,72 @@ export default function TodoPage() {
         <li>
           <NoteForm refetchData={getAll}/>
         </li>
-        <li>
+        {/* <li>
           <div className="note-create">
 
             <button className="create" aria-label="create note"> <MdAdd /> </button>
           </div>
-        </li>
+        </li> */}
       </ul>
+
+      <h2> Completed </h2>
+      <ul className="notes completed">
+        {notesState.filter(note => note.status === 'completed').map(note => (
+          <li key={note._id}>
+            <NoteItem {...note} />
+          </li>
+        ))}
+      </ul>
+
+      <h2> Trash </h2>
+      <ul className="notes trash">
+        {notesState.filter(note => note.status === 'trash').map(note => (
+          <li key={note._id}>
+            <NoteItem {...note} />
+          </li>
+        ))}
+      </ul>
+
+      <div className="bg">
+        <figure className="right bush">
+          <Image src={`/assets/pikmin/bush-1-2x.webp`} alt="background image" height={100} width={200}/>
+        </figure>
+        <figure className="left bush">
+          <Image src={`/assets/pikmin/bush-1-2x.webp`} alt="background image" height={100} width={200}/>
+        </figure>
+
+        <figure className="pikmin one">
+          <Image src={`/assets/pikmin/blue-1.webp`} alt="background image" height={150} width={130}/>
+        </figure>
+
+        <figure className="pikmin two">
+          <Image src={`/assets/pikmin/red-1.webp`} alt="background image" height={150} width={100}/>
+        </figure>
+
+        <figure className="pikmin three">
+          <Image src={`/assets/pikmin/yellow-1.webp`} alt="background image" height={150} width={100}/>
+        </figure>
+        <figure className="pikmin four">
+          <Image src={`/assets/pikmin/pink-1.webp`} alt="background image" height={150} width={130}/>
+        </figure>
+      </div>
+
+      <div className="fg">
+        <figure className="right flower">
+          <Image src={`/assets/pikmin/daisy-right-medium-up.webp`} alt="background image" height={200} width={200}/>
+        </figure>
+
+        <figure className="left flower">
+          <Image src={`/assets/pikmin/daisy-left-medium-up.webp`} alt="background image" height={200} width={200}/>
+        </figure>
+      </div>
     </StyledNotesPage>
   </>)
 }
 
-const StyledNotesPage = styled.ul`
+const StyledNotesPage = styled.div`
+
+  position: relative;
 
   ul.notes{
     display: flex;
@@ -179,6 +234,70 @@ const StyledNotesPage = styled.ul`
         background-color: #999999;
   
       }
+    }
+  }
+
+  .bg, .fg{
+    border: dotted cyan 3px;
+    position: fixed;
+    /* object-fit: cover; */
+    
+    /* width: 100%;
+    height: 100%; */
+    height: 100vh;
+    width: 100vw;
+    top: 0;
+    left: 0;
+
+    figure{
+      margin: 0;
+    }
+    
+  }
+  .bg{
+    pointer-events: none;
+    z-index: -10;
+  }
+
+  .fg{
+    pointer-events: none;
+    z-index: 10;    
+  }
+
+  .flower, .bush, .pikmin{
+    position: absolute;
+  }
+
+  .flower{
+    bottom: -10px;
+  }
+
+  .bush{
+    top: -10px;
+    filter: blur(.8px);
+  }
+
+  .right{
+    right: 0;
+  }
+  .left{
+    left: 0;
+  }
+
+  .pikmin{
+    bottom: 0;
+    
+    &.one{
+      left: 10%;
+    }
+    &.two{
+      left: 25%;
+    }
+    &.three{
+      right: 20%;
+    }
+    &.four{
+      right: 35%;
     }
   }
 

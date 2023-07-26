@@ -3,6 +3,7 @@ import { InputObj, Note } from "../../types/types"
 import { FormEvent } from "react"
 import useForm2 from "../../lib/useForm2"
 import { FormInput } from "../elements/FormInput"
+import { MdAdd } from "react-icons/md";
 
 type Props = {
   refetchData: any,
@@ -19,6 +20,7 @@ export function NoteForm({refetchData}:Props) {
       errorMessage: 'title name error',
       required: true,
       initial: '',
+      // pattern: '',
       // disabled:true,
     },
     {
@@ -28,7 +30,7 @@ export function NoteForm({refetchData}:Props) {
       label: 'color',
       errorMessage: 'color error',
       required: true,
-      initial: '#c8a3ce',
+      initial: 'pink',
       // disabled:true,
     },
     {
@@ -72,31 +74,106 @@ export function NoteForm({refetchData}:Props) {
       const data = await res.json()
       console.log(data)
       refetchData()
+      resetForm()
       // signIn('yourProviderHere', { callbackUrl: '/love' })
 
     } catch (err) {
       console.error(err)
     }
-
   }
 
   return (
-    <StyledTodoForm onSubmit={handleSubmit}>
+    <StyledTodoForm onSubmit={handleSubmit} color={values.color}>
 
       <legend>Create Note</legend>
 
       <fieldset>
-
+        <br />
         <FormInput 
           {...handleFindProps('title')}
           value={values['title']}
           onChange={handleChange}
         />
-        <FormInput 
+        <br/>
+        {/* <FormInput 
           {...handleFindProps('color')}
           value={values['color']}
           onChange={handleChange}
-        />
+        /> */}
+        <ul className="colors">
+          <li>
+            <button
+              type="button" 
+              onClick={() => setValues((prev:any) => ({...prev, color: 'red'}))}
+              className="red"
+            > 
+              red 
+            </button>
+          </li>
+          <li>
+            <button
+              type="button" 
+              onClick={() => setValues((prev:any) => ({...prev, color: 'blue'}))}
+              className="blue"
+            > 
+              blue 
+            </button>
+          </li>
+          <li>
+            <button
+              type="button" 
+              onClick={() => setValues((prev:any) => ({...prev, color: 'yellow'}))}
+              className="yellow"
+            > 
+              yellow 
+            </button>
+          </li>
+          <li>
+            <button 
+              type="button"
+              onClick={() => setValues((prev:any) => ({...prev, color: 'pink'}))}
+              className="pink"
+            >
+                pink 
+            </button>
+          </li>
+          <li>
+            <button 
+              type="button"
+              onClick={() => setValues((prev:any) => ({...prev, color: 'white'}))}
+              className="white"
+            >
+                white 
+            </button>
+          </li>
+          <li>
+            <button 
+              type="button"
+              onClick={() => setValues((prev:any) => ({...prev, color: 'purple'}))}
+              className="purple"
+            >
+                purple 
+            </button>
+          </li>
+          <li>
+            <button 
+              type="button"
+              onClick={() => setValues((prev:any) => ({...prev, color: 'cyan'}))}
+              className="cyan"
+            >
+                cyan 
+            </button>
+          </li>
+          <li>
+            <button 
+              type="button"
+              onClick={() => setValues((prev:any) => ({...prev, color: 'green'}))}
+              className="green"
+            >
+                green 
+            </button>
+          </li>
+        </ul>
 
         {/* <label htmlFor="title">
           <span> title </span>
@@ -122,16 +199,18 @@ export function NoteForm({refetchData}:Props) {
           </select>
         </label> */}
 
+        <button type="submit"> <MdAdd /> </button>
+
       </fieldset>
 
-      <button type="submit"> submit </button>
     </StyledTodoForm>
   )
 }
 
 
-const StyledTodoForm = styled.form`
+const StyledTodoForm = styled.form<{color:string}>`
 
+  background: ${p => `var(--cg-${p.color})`};
   max-width: 30rem;
 
   legend{
@@ -152,6 +231,39 @@ const StyledTodoForm = styled.form`
         font-weight: bolder;
       }
     } */
+  }
+
+  ul.colors{
+    padding: 0;
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+
+    .red{
+      background: var(--cg-red);
+    }
+    .blue{
+      background: var(--cg-blue);
+    }
+    .pink{
+      background: var(--cg-pink);
+    }
+    .purple{
+      background: var(--cg-purple);
+    }
+    .cyan{
+      background: var(--cg-cyan);
+    }
+    .white{
+      background: var(--cg-white);
+    }
+    .green{
+      background: var(--cg-green);
+    }
+    .yellow{
+      background: var(--cg-yellow);
+    }
   }
 
   button[type="submit"]{

@@ -91,6 +91,7 @@ export function TodoForm({id, setTodosState}:Props) {
           value={values['message']}
           onChange={handleChange}
         />
+
         {/* <FormInput 
           {...handleFindProps('status')}
           value={values['status']}
